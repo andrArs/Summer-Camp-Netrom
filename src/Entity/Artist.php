@@ -18,14 +18,16 @@ class Artist
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
+
 
     /**
      * @var Collection<int, FestivalArtist>
      */
     #[ORM\OneToMany(targetEntity: FestivalArtist::class, mappedBy: 'artist')]
     private Collection $festivalArtists;
+
+    #[ORM\Column(length: 255)]
+    private ?string $genre = null;
 
     public function __construct()
     {
@@ -51,17 +53,7 @@ class Artist
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
 
-    public function setType(string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, FestivalArtist>
@@ -89,6 +81,18 @@ class Artist
                 $festivalArtist->setArtist(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(string $genre): static
+    {
+        $this->genre = $genre;
 
         return $this;
     }

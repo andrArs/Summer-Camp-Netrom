@@ -28,8 +28,7 @@ class Festival
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $EndDate = null;
 
-    #[ORM\Column]
-    private ?int $price = null;
+
 
     /**
      * @var Collection<int, FestivalArtist>
@@ -103,17 +102,6 @@ class Festival
         return $this;
     }
 
-    public function getPrice(): ?int
-    {
-        return $this->price;
-    }
-
-    public function setPrice(int $price): static
-    {
-        $this->price = $price;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, FestivalArtist>

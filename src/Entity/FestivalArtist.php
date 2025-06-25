@@ -19,6 +19,9 @@ class FestivalArtist
     #[ORM\ManyToOne(inversedBy: 'festivalArtists')]
     private ?Artist $artist = null;
 
+    #[ORM\ManyToOne(inversedBy: 'festivalArtists')]
+    private ?Schedule $schedule = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class FestivalArtist
     public function setArtist(?Artist $artist): static
     {
         $this->artist = $artist;
+
+        return $this;
+    }
+
+    public function getSchedule(): ?Schedule
+    {
+        return $this->schedule;
+    }
+
+    public function setSchedule(?Schedule $schedule): static
+    {
+        $this->schedule = $schedule;
 
         return $this;
     }

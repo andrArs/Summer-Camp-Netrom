@@ -19,6 +19,9 @@ class Purchase
     #[ORM\ManyToOne(inversedBy: 'purchases')]
     private ?Festival $festival = null;
 
+    #[ORM\ManyToOne(inversedBy: 'Purchase')]
+    private ?Ticket $ticket = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Purchase
     public function setFestival(?Festival $festival): static
     {
         $this->festival = $festival;
+
+        return $this;
+    }
+
+    public function getTicket(): ?Ticket
+    {
+        return $this->ticket;
+    }
+
+    public function setTicket(?Ticket $ticket): static
+    {
+        $this->ticket = $ticket;
 
         return $this;
     }
