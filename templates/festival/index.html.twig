@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FestivalController!{% endblock %}
+
+{% block body %}
+<style>
+    .container {background: #6D28D9;}
+    .example-wrapper { background: #a78bfa;margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+{#<div class="container">#}
+<div class="example-wrapper">
+{#    <h1>Glad you're here!!! {{ festival_name }} has been waiting for you! </h1>#}
+{#    <h2>Location: {{ festival_location }}</h2>#}
+{#    <h2>Date: {{ festival_start_date|date('Y-m-d')  }} : {{ festival_end_date|date('y-m-d') }}  </h2>#}
+
+    <h3> {% for festival in festivals %}
+            <h4>{{ festival.getName() }}</h4>
+            <h5>{{ festival.getLocation() }}</h5>
+    {% endfor %}</h3>
+</div>
+{#</div>#}
+{% endblock %}

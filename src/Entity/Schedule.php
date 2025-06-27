@@ -28,8 +28,7 @@ class Schedule
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTime $end_time = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $location = null;
+
 
     /**
      * @var Collection<int, FestivalArtist>
@@ -98,17 +97,7 @@ class Schedule
         return $this;
     }
 
-    public function getLocation(): ?string
-    {
-        return $this->location;
-    }
 
-    public function setLocation(string $location): static
-    {
-        $this->location = $location;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, FestivalArtist>

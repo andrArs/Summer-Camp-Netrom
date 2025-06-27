@@ -8,11 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: UserDetailsRepository::class)]
 class UserDetails
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
+
+//    #[OneToOne(targetEntity: Shipment::class)]
+//    #[JoinColumn(name: 'shipment_id', referencedColumnName: 'id')]
+
+    #[ORM\Id]
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
