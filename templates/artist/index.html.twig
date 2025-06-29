@@ -10,12 +10,24 @@
 
 <div class="example-wrapper">
     <h1>Meet all of our artists!</h1>
-    <h3> {% for artist in artists %}
-            <h4>{{ artist.name }}</h4>
-            <h5>{{ artist.getGenre() }}</h5>
-        {% endfor %}</h3>
+{#    <h3> {% for artist in artists %}#}
+{#            <h4>{{ artist.name }}</h4>#}
+{#            <h5>{{ artist.getGenre() }}</h5>#}
+{#        {% endfor %}</h3>#}
 
+    <ul>
+        {% for artist in pagination %}
+            <li>
+                <strong>{{ artist.name }}</strong><br>
+                Genre: {{ artist.genre }}
+            </li>
+        {% else %}
+            <li>No artists found.</li>
+        {% endfor %}
+    </ul>
 
-
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 </div>
 {% endblock %}
