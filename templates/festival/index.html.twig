@@ -10,9 +10,6 @@
 </style>
 {#<div class="container">#}
 <div class="example-wrapper">
-{#    <h1>Glad you're here!!! {{ festival_name }} has been waiting for you! </h1>#}
-{#    <h2>Location: {{ festival_location }}</h2>#}
-{#    <h2>Date: {{ festival_start_date|date('Y-m-d')  }} : {{ festival_end_date|date('y-m-d') }}  </h2>#}
 
     <h3> {% for festival in festivals %}
             <h4>{{ festival.getName() }}</h4>

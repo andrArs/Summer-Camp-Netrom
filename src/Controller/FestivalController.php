@@ -10,24 +10,17 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class FestivalController extends AbstractController
 {
-    public function __construct(private FestivalRepository $festivalRepository){}
+    public function __construct(private readonly FestivalRepository $festivalRepository){}
 
-//    #[Route('/festival', name: 'app_festival')]
-//    public function index(): Response
-//    {
-//        return $this->render('festival/index.html.twig', [
-//            'controller_name' => 'FestivalController',
-//        ]);
-//    }
 
     #[Route('/festival/{id}', name: 'one_festival', methods: ['GET'])]
     public function getOneFestival(int $id): Response
     {
         $festival = $this->festivalRepository->find($id);
         if($festival === null){
-            return $this->json(['error' => 'Model not found'], Response::HTTP_NOT_FOUND);
+            return $this->json(['error' => 'Festival not found'], Response::HTTP_NOT_FOUND);
         }
-        return $this->render('festival/index.html.twig', [
+        return $this->render('festival/oneFestival.html.twig', [
             'festival_id' =>$festival->getId(),
             'festival_name' => $festival->getName(),
             'festival_location' => $festival->getLocation(),

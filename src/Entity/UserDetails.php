@@ -10,12 +10,9 @@ class UserDetails
 {
 
 
-//    #[OneToOne(targetEntity: Shipment::class)]
-//    #[JoinColumn(name: 'shipment_id', referencedColumnName: 'id')]
-
     #[ORM\Id]
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
     private ?User $user = null;
 
     #[ORM\Column(length: 255)]
