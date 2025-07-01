@@ -24,6 +24,7 @@ class Artist
      * @var Collection<int, FestivalArtist>
      */
     #[ORM\OneToMany(targetEntity: FestivalArtist::class, mappedBy: 'artist')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $festivalArtists;
 
     #[ORM\Column(length: 255)]

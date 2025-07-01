@@ -4,15 +4,111 @@
 
 {% block body %}
     <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+        body {
+            background-color: #f3e6f5;{# light purple #}
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        .example-wrapper {
+            margin: 2em auto;
+            max-width: 700px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(111, 66, 193, 0.3);
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn-danger {
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+        }
+
+        .btn-danger:hover {
+            background-color: #5a35a2;
+            border-color: #5a35a2;
+        }
+
+        .modal-content {
+            border: 2px solid #6f42c1;
+            border-radius: 12px;
+        }
+
+        .modal-header {
+            background-color: #f3e6f5;
+        }
+
     </style>
 
     <div class="example-wrapper">
         <h1>Meet all of our artists!</h1>
-        <h3> Meet {{ artist.name }}!!!
-            <h4> Genre: {{ artist.genre }}</h4>>
-        </h3>
+        <h3> {{ artist.name }}</h3>
+            <h4> Genre: {{ artist.genre }}</h4>
+
+{#            button trigger modal#}
+            <div class="btn-container">
+                <button type="button"
+                        class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal{{ artist.id }}">
+                    Delete
+                </button>
+
+                <a href="{{ path('all_artists') }}" class="btn btn-outline-secondary">Back to list</a>
+            </div>
+
+{#            modal#}
+            <div class="modal fade"
+                 id="deleteModal{{ artist.id }}"
+                 tabindex="-1"
+                 aria-labelledby="deleteModalLabel{{ artist.id }}"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <form action="{{ path('delete_artist', {'id': artist.id}) }}" method="post">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title"
+                                    id="deleteModalLabel{{ artist.id }}">Are you sure you want to delete the following artist?</h5>
+
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <strong>{{ artist.name }}</strong>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+{#            <form action="{{ path(name='delete_artist', parameters={id:artist.id},relative=false) }}"#}
+{#                  method="post"#}
+{#                  data-confirmation="true"#}
+{#                  id="delete-form">#}
+
+{#                <button type="submit" class="btn btn-block btn-danger">Delete</button>#}
+{#            </form>#}
+
+
+
+
 
 
 

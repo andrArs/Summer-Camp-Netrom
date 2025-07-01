@@ -28,6 +28,7 @@ class Stage
      * @var Collection<int, Schedule>
      */
     #[ORM\OneToMany(targetEntity: Schedule::class, mappedBy: 'stage')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $schedules;
 
     public function __construct()

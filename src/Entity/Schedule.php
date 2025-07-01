@@ -34,9 +34,11 @@ class Schedule
      * @var Collection<int, FestivalArtist>
      */
     #[ORM\OneToMany(targetEntity: FestivalArtist::class, mappedBy: 'schedule')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $festivalArtists;
 
     #[ORM\ManyToOne(inversedBy: 'schedules')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private ?Stage $stage = null;
 
     public function __construct()

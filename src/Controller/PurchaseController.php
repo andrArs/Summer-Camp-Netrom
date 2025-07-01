@@ -22,7 +22,7 @@ final class PurchaseController extends AbstractController
         ]);
     }
 
-    #[Route('/purchase/{id}', name: 'one_purchase', methods: ['GET'])]
+    #[Route('/purchase/{id}', name: 'show_purchase', methods: ['GET'])]
     public function getOnePurchase(int $id): Response
     {
         $purchase = $this->purchaseRepository->find($id);
@@ -30,7 +30,7 @@ final class PurchaseController extends AbstractController
         if($purchase === null){
             return $this->json(['error' => 'Purchase not found'], Response::HTTP_NOT_FOUND);
         }
-        return $this->render('purchase/index.html.twig', [
+        return $this->render('purchase/show.html.twig', [
             'purchase' => $purchase
         ]);
     }

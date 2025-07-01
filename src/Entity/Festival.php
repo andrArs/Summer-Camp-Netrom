@@ -34,12 +34,14 @@ class Festival
      * @var Collection<int, FestivalArtist>
      */
     #[ORM\OneToMany(targetEntity: FestivalArtist::class, mappedBy: 'festival')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $festivalArtists;
 
     /**
      * @var Collection<int, Purchase>
      */
     #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'festival')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $purchases;
 
     public function __construct()

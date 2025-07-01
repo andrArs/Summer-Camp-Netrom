@@ -9,12 +9,12 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1> Type of tickets </h1>
+    <h2> {% for ticket in tickets %}
+            <h4>{{ ticket.getType() }}</h4>
+            <h5>{{ ticket.getPrice() }}</h5>
+        {% endfor %}</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/Andreea/Desktop/SummerCamp1/src/Controller/TicketController.php</code></li>
-        <li>Your template at <code>C:/Users/Andreea/Desktop/SummerCamp1/templates/ticket/index.html.twig</code></li>
-    </ul>
+
 </div>
 {% endblock %}

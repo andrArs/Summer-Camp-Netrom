@@ -9,12 +9,11 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>full schedule</h1>
+    <h2> {% for s in schedules %}
+            <h4>{{ s.getDay() }}</h4>
+            <h5>{{ s.getDate()|date('Y-m-d') }}</h5>
+        {% endfor %}</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/Andreea/Desktop/SummerCamp1/src/Controller/ScheduleController.php</code></li>
-        <li>Your template at <code>C:/Users/Andreea/Desktop/SummerCamp1/templates/schedule/index.html.twig</code></li>
-    </ul>
 </div>
 {% endblock %}

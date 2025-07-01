@@ -25,6 +25,7 @@ class Ticket
      * @var Collection<int, Purchase>
      */
     #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'ticket')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $Purchase;
 
     #[ORM\Column(length: 255)]

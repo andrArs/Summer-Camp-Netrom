@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ArtistRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ArtistController extends AbstractController
 {
-    public function __construct(private readonly ArtistRepository $artistRepository){}
+    public function __construct(private readonly ArtistRepository $artistRepository, private readonly EntityManagerInterface $entityManager){}
 //    #[Route('/artist', name: 'all_artists',methods: ['GET'])]
 //    public function getAllArtists(): Response
 //    {
@@ -28,9 +29,9 @@ final class ArtistController extends AbstractController
 
 
         $pagination = $paginator->paginate(
-            $queryBuilder, //datele luate de mai sus din repo ul artist
+            $queryBuilder, //query ul pt datele luate de mai sus din repo ul artist
             $request->query->getInt('page', 1),
-            10 //nr de artisti pe pagina
+            9 //nr de artisti pe pagina
         );
 
         return $this->render('artist/index.html.twig', [
@@ -51,4 +52,21 @@ final class ArtistController extends AbstractController
             'artist' =>$artist
         ]);
     }
+
+    #[Route('/artist/{id}', name: 'delete_artist', methods: ['POST'])]
+    public function deleteArtist(int $id): Response
+    {
+        $artist = $this->artistRepository->find($id);
+
+        if ($artist === null) {
+            return $this->json(['error' => 'Artist not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $this->entityManager->remove($artist);
+        $this->entityManager->flush();
+
+        return $this->json(['message' => 'Artist deleted']);
+    }
+
+
 }

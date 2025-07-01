@@ -31,6 +31,7 @@ class User
      * @var Collection<int, Purchase>
      */
     #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'user')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $purchases;
 
     public function __construct()
