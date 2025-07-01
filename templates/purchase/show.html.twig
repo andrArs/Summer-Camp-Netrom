@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HelloController!{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #f3e6f5;{# light purple #}
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        .example-wrapper {
+            margin: 2em auto;
+            max-width: 700px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(111, 66, 193, 0.3);
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn-danger {
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+        }
+
+        .btn-danger:hover {
+            background-color: #5a35a2;
+            border-color: #5a35a2;
+        }
+
+        .modal-content {
+            border: 2px solid #6f42c1;
+            border-radius: 12px;
+        }
+
+        .modal-header {
+            background-color: #f3e6f5;
+        }
+
+    </style>
+
+    <div class="example-wrapper">
+        <h1>Details about your purchase!</h1>
+
+        <h3>Owner: <strong>{{ purchase.user.email }}</strong></h3>
+
+        <h3>Festival Details:</h3>
+        <ul class="detail-list">
+            <li><strong>Name:</strong> {{ purchase.festival.name }}</li>
+            <li><strong>Location:</strong> {{ purchase.festival.location }}</li>
+            <li><strong>Dates:</strong> {{ purchase.festival.getStartDate()|date('Y-m-d') }} – {{ purchase.festival.getEndDate()|date('Y-m-d') }}</li>
+        </ul>
+
+        <h3>Ticket Information:</h3>
+        <ul class="detail-list">
+            <li><strong>Type:</strong> {{ purchase.ticket.type }}</li>
+            <li><strong>Description:</strong> {{ purchase.ticket.description }}</li>
+            <li><strong>Price:</strong> {{ purchase.ticket.price }} lei</li>
+        </ul>
+
+
+        {#            button trigger modal#}
+        <div class="btn-container">
+            <button type="button"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal{{ purchase.id }}">
+                Delete
+            </button>
+
+            <a href="{{ path('all_purchases') }}" class="btn btn-outline-secondary">Back to list</a>
+        </div>
+
+        {#            modal#}
+        <div class="modal fade"
+             id="deleteModal{{ purchase.id }}"
+             tabindex="-1"
+             aria-labelledby="deleteModalLabel{{ purchase.id }}"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <form action="{{ path('delete_purchase', {'id': purchase.id}) }}" method="post">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title"
+                                id="deleteModalLabel{{ purchase.id }}">Are you sure you want to delete the this purchase?</h5>
+
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+{% endblock %}

@@ -29,9 +29,9 @@ final class ArtistController extends AbstractController
 
 
         $pagination = $paginator->paginate(
-            $queryBuilder, //query ul pt datele luate de mai sus din repo ul artist
+            $queryBuilder,
             $request->query->getInt('page', 1),
-            9 //nr de artisti pe pagina
+            9 //artists per page
         );
 
         return $this->render('artist/index.html.twig', [
@@ -65,7 +65,7 @@ final class ArtistController extends AbstractController
         $this->entityManager->remove($artist);
         $this->entityManager->flush();
 
-        return $this->json(['message' => 'Artist deleted']);
+        return $this->redirectToRoute('all_artists');
     }
 
 

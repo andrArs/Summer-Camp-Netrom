@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome to FestivalApp{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background: #2e1a47;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .homepage-container {
+            padding: 5rem 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-home {
+            background-color: #4c1d95;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(76, 29, 149, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #6b21a8;
+            box-shadow: 0 6px 20px rgba(76, 29, 149, 0.6);
+        }
+    </style>
+
+    <div class="homepage-container">
+        <h1>Welcome to ShowTime app!</h1>
+        <p>Discover amazing artists, vibrant festivals, and purchase your tickets in one place!</p>
+        <a href="{{ path('all_festivals') }}" class="btn-home">Festivals</a>
+        <a href="{{ path('all_artists') }}" class="btn-home"> Artists</a>
+        <a href="{{ path('all_stages') }}" class="btn-home"> Stages</a>
+        <a href="{{ path('all_tickets') }}" class="btn-home"> Tickets</a>
+        <a href="{{ path('all_users') }}" class="btn-home"> Users</a>
+        <a href="{{ path('all_purchases') }}" class="btn-home"> Purchases</a>
+        <a href="{{ path('all_lineup') }}" class="btn-home"> Lineup</a>
+    </div>
+{% endblock %}

@@ -4,38 +4,59 @@ namespace App\Controller;
 
 use App\Repository\FestivalRepository;
 use App\Repository\UserDetailsRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class FestivalController extends AbstractController
 {
-    public function __construct(private readonly FestivalRepository $festivalRepository){}
+    public function __construct(private readonly FestivalRepository $festivalRepository, private readonly EntityManagerInterface $entityManager){}
 
 
-    #[Route('/festival/{id}', name: 'one_festival', methods: ['GET'])]
+    #[Route('/festival/{id}', name: 'show_festival', methods: ['GET'])]
     public function getOneFestival(int $id): Response
     {
         $festival = $this->festivalRepository->find($id);
         if($festival === null){
             return $this->json(['error' => 'Festival not found'], Response::HTTP_NOT_FOUND);
         }
-        return $this->render('festival/oneFestival.html.twig', [
-            'festival_id' =>$festival->getId(),
-            'festival_name' => $festival->getName(),
-            'festival_location' => $festival->getLocation(),
-            'festival_start_date' => $festival->getStartDate(),
-            'festival_end_date' => $festival->getEndDate()
-
+        return $this->render('festival/showFestival.html.twig', [
+            'festival'=>$festival
         ]);
     }
 
     #[Route('/festival', name: 'all_festivals', methods: ['GET'])]
-    public function getAllFestivals():Response
+    public function getAllFestivals(Request $request, PaginatorInterface $paginator): Response
     {
-        $festivals = $this->festivalRepository->findAll();
+        $queryBuilder = $this->festivalRepository->createQueryBuilder('f');
+
+
+        $pagination = $paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            3 //festivals per page
+        );
+
         return $this->render('festival/index.html.twig', [
-            'festivals' => $festivals,
+            'pagination' => $pagination
         ]);
+    }
+
+    #[Route('/festival/{id}', name: 'delete_festival', methods: ['POST'])]
+    public function deleteFestival(int $id): Response
+    {
+        $festival = $this->festivalRepository->find($id);
+
+        if ($festival === null) {
+            return $this->json(['error' => 'Festival not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $this->entityManager->remove($festival);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('all_festivals');
     }
 }
