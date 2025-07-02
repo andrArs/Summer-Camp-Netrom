@@ -118,6 +118,13 @@
                             </h5>
                             <p class="card-text">Genre: {{ artist.genre }}</p>
 
+                            <a href="{{ path('edit_artist', {'id': artist.id}) }}" class="btn btn-outline-light" >
+                                Edit Artist
+                            </a>
+                            <a href="{{ path('new_artist') }}" class="btn btn-outline-light" >
+                                New Artist
+                            </a>
+
                             {#button trigger modal#}
                             <button type="button"
                                     class="btn btn-danger btn-sm w-100 mt-auto"

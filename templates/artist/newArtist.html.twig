@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArtistController!{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #f3e6f5;{# light purple #}
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        .example-wrapper {
+            margin: 2em auto;
+            max-width: 700px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(111, 66, 193, 0.3);
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn-danger {
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+        }
+
+        .btn-danger:hover {
+            background-color: #5a35a2;
+            border-color: #5a35a2;
+        }
+
+        .modal-content {
+            border: 2px solid #6f42c1;
+            border-radius: 12px;
+        }
+
+        .modal-header {
+            background-color: #f3e6f5;
+        }
+
+        .wrapper{
+            max-width: 550px;
+            border-radius: 10px;
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 20px 20px 80px rgb(206, 206, 206);
+        }
+        .h2{
+            font-family: 'Kaushan Script', cursive;
+            font-size: 3.0rem;
+            font-weight: bold;
+            color: #ae88ec;
+            text-shadow: 0 0 2px #a069ee;
+            font-style: italic;
+        }
+        .h5{
+            color: #555;
+            margin: 0;
+        }
+        .form-control{
+            border: 1.5px solid #7b2ee8;
+        }
+        .form-control:focus{
+            box-shadow: none;
+        }
+        .mandatory::after{
+            content: "*";
+            color: #ff0000;
+        }
+        .button-section .btn{
+            background-color: #fff;
+            border-radius: 20px;
+            border: 1.5px solid #7b2ee8;
+            padding: 5px 15px;
+        }
+        .button-section .btn.btn-primary{
+            background-color: #7b2ee8;
+            color: #eee;
+        }
+        .button-section .btn:hover{
+            background-color: #7b2ee8;
+            color: #eee;
+        }
+        .remember{
+            border: 1px solid #7b2ee8;
+        }
+        .gender-l{
+            margin: 0;
+        }
+        #male{
+            display: none;
+        }
+        input[type="radio"]{
+            visibility: hidden;
+        }
+        input[type='radio']:checked{
+            background-color: #7b2ee8;
+        }
+        .btn.btn-primary{
+            background-color: #fff;
+            color: #555;
+            border: 1px solid #7b2ee8;
+            width: 115px;
+        }
+        .btn.btn-primary:hover{
+            background-color: #a069ee;
+            color: #fff;
+        }
+        .btn-primary:not(:disabled):not(.disabled).active,
+        .btn-primary:not(:disabled):not(.disabled):active{
+            background-color: #7b2ee8;
+        }
+        @media(max-width: 575px){
+            .btn-group{
+                width: 100%;
+            }
+            .btn-group>.btn{
+                flex: 50%;
+            }
+            .wrapper{
+                margin: 10px;
+            }
+            .h5{
+                padding-top: 10px;
+            }
+        }
+
+
+
+    </style>
+
+{#    <div>#}
+
+
+{#        <h1>Create new Artist</h1>#}
+{#        {{ form_start(form) }}#}
+{#        {{ form_widget(form) }}#}
+{#        {{ form_end(form) }}#}
+
+{#            <a href="{{ path('all_artists') }}">back to list</a>#}
+
+{#    </div>#}
+
+
+    <div class="wrapper bg-white">
+        <div class="h2 text-center">Create new Artist</div>
+
+        <div class="text-muted">Enter artist details</div>
+        <form>
+            {{ form_start(form) }}
+
+{#            {{ form_row(form.name) }}#}
+{#            {{ form_row(form.genre) }}#}
+
+                {{ form_widget(form) }}
+
+            {{ form_end(form) }}
+
+            <a href="{{ path('all_artists') }}" class="btn btn-outline-secondary">back to list</a>
+        </form>
+    </div>
+
+
+
+
+
+
+{% endblock %}
