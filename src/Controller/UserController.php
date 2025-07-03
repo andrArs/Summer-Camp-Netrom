@@ -84,7 +84,7 @@ public function deleteUser(int $id): Response
         ]);
     }
 
-    #[Route('/user/edit/{id}', name: 'edit_user', methods: ['GET', 'POST'])]
+    #[Route('/user/{id}/edit', name: 'edit_user', methods: ['GET', 'POST'])]
     public function editUser(Request $request, int $id): Response
     {
         $user = $this->userRepository->find($id);
