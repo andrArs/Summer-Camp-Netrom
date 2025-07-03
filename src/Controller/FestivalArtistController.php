@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\FestivalArtist;
+use App\Form\LineupType;
 use App\Repository\FestivalArtistRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -48,7 +50,7 @@ final class FestivalArtistController extends AbstractController
         ]);
     }
 
-    #[Route('/festivalArtist/{id}', name:'delete_lineup', methods: ['POST'])]
+    #[Route('/festivalArtist/delete/{id}', name:'delete_lineup', methods: ['POST'])]
 public function deleteLineup(int $id): Response
     {
         $fa = $this->festivalArtistRepository->find($id);
@@ -63,5 +65,42 @@ public function deleteLineup(int $id): Response
         return $this->redirectToRoute('all_lineup');
     }
 
+    #[Route('/festivalArtist/new', name: 'new_lineup', methods: ['GET', 'POST'])]
+    public function newLineup(Request $request): Response{
+        $festivalArtist = new FestivalArtist();
+        $form=$this->createForm(LineupType::class,$festivalArtist);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($festivalArtist);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('all_lineup', ['id' => $festivalArtist->getId()]);
+
+        }
+        return $this->render('festival_artist/newLineup.html.twig', [
+            'form' => $form->createView(),
+            'lineup' => $festivalArtist
+        ]);
+    }
+
+    #[Route('/festivalArtist/{id}/edit', name: 'edit_lineup', methods: ['GET', 'POST'])]
+    public function editArtistFestival(Request $request, int $id): Response
+    {
+        $lineup = $this->festivalArtistRepository->find($id);
+        if($lineup === null){
+            return $this->json(['error' => 'Lineup not found'], Response::HTTP_NOT_FOUND);
+
+        }
+        $form=$this->createForm(LineupType::class,$lineup);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->entityManager->flush();
+            return $this->redirectToRoute('all_lineup', ['id' => $lineup->getId()]);
+        }
+        return $this->render('festival_artist/editLineup.html.twig', [
+            'form' => $form->createView(),
+            'lineup' => $lineup
+        ]);
+    }
 
 }

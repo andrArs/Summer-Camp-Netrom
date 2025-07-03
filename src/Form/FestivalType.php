@@ -6,7 +6,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-class ArtistType extends AbstractType{
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+class FestivalType extends AbstractType{
 
     public function buildForm(FormBuilderInterface $builder, array $options):void{
         $builder
@@ -14,15 +15,22 @@ class ArtistType extends AbstractType{
                 'label' => 'Name',
                 'attr' => [
                     'class' => 'custom-input',
-                    'placeholder' => 'e.g. The Motans'
+                    'placeholder' => 'e.g. Untold'
                 ]
             ])
-            ->add('genre', TextType::class, [
-                'label' => 'Genre',
+            ->add('location', TextType::class, [
+                'label' => 'Location',
                 'attr' => [
                     'class' => 'custom-input',
-                    'placeholder' => 'e.g. Pop'
+                    'placeholder' => 'e.g. Cluj'
                 ]
+            ])
+            ->add('startDate', DateType::class, [
+                'label' => 'Start Date'
+
+            ])
+            ->add('endDate', DateType::class, [
+                'label' => 'End Date'
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Save',
@@ -34,7 +42,7 @@ class ArtistType extends AbstractType{
 
     public function configureOptions(OptionsResolver $resolver):void{
         $resolver->setDefaults(array(
-//            'data_class' => 'App\Entity\Artist'
+
 
         ));
     }

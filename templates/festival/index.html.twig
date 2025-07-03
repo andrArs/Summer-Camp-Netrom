@@ -95,8 +95,16 @@
     </style>
 
     <div class="container mt-4">
-        <a href="{{ path('app_homepage') }}" class="btn btn-outline-light" >
+        <a href="{{ path('app_homepage') }}"
+           class="btn btn-outline-light"
+           style="border-radius: 25px">
             Back to Homepage
+        </a>
+        <a href="{{ path('new_festival') }}"
+           class="btn btn-outline-light"
+           style="border-radius: 25px"
+        >
+            Create Festival
         </a>
     <h1 class="mb-5 text-center"
         style="color:#d4cfff;">Festivals</h1>
@@ -115,6 +123,13 @@
                         </a>
                     </h5>
                     <p class="card-text">{{ festival.location }}</p>
+
+                    <a href="{{ path('edit_festival', {'id': festival.id}) }}"
+                       class="btn btn-outline-light"
+                       style="border-radius: 25px"
+                    >
+                        Edit Festival
+                    </a>
 
                     {#button trigger modal#}
                     <button type="button"

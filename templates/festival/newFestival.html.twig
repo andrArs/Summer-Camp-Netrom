@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ArtistController!{% endblock %}
+{% block title %}Create new Artist{% endblock %}
 
 {% block body %}
     <style>
@@ -24,8 +24,13 @@
             font-size: 2.2rem;
             font-weight: bold;
             color: #5d4587;
-            text-shadow: 0 0 2px #2e1a47;
+            text-shadow: 0 0 4px #2e1a47;
             margin-bottom: 10px;
+        }
+
+        .text-muted {
+            color: #666;
+            margin-bottom: 25px;
         }
 
         .form-group {
@@ -74,17 +79,16 @@
         .btn-back:hover {
             background-color: #f3e6f5;
         }
+
     </style>
 
     <div class="wrapper bg-white">
         <div style="text-align: left;">
-            <a href="{{ path('all_artists') }}" class="btn-back">← Back to list</a>
+            <a href="{{ path('all_festivals') }}" class="btn-back">← Back to list</a>
         </div>
-
-        <div class="h2 text-center">Edit artist: {{ artist.name }}</div>
+        <div class="h2 text-center">Create new Festival</div>
 
         {{ form_start(form) }}
-
         <div class="form-group">
             {{ form_label(form.name) }}
             {{ form_widget(form.name) }}
@@ -92,24 +96,27 @@
         </div>
 
         <div class="form-group">
-            {{ form_label(form.genre) }}
-            {{ form_widget(form.genre) }}
-            {{ form_errors(form.genre) }}
+            {{ form_label(form.location) }}
+            {{ form_widget(form.location) }}
+            {{ form_errors(form.location) }}
         </div>
 
+        <div class="form-group">
+            {{ form_label(form.startDate) }}
+            {{ form_widget(form.startDate) }}
+            {{ form_errors(form.startDate) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.endDate) }}
+            {{ form_widget(form.endDate) }}
+            {{ form_errors(form.endDate) }}
+        </div>
         <div class="form-group text-center mt-3">
             {{ form_row(form.save) }}
         </div>
 
         {{ form_end(form) }}
     </div>
-
-
-
-
-
-
-
-
 
 {% endblock %}

@@ -97,8 +97,14 @@
     <div class="container mt-4">
 
         <div class="d-flex justify-content-end mb-3">
-            <a href="{{ path('app_homepage') }}" class="btn btn-outline-light" >
+            <a href="{{ path('app_homepage') }}"
+               class="btn btn-outline-light"
+               style="border-radius: 25px"
+            >
                 Back to Homepage
+            </a>
+            <a href="{{ path('new_artist') }}" class="btn btn-outline-light" style="border-radius: 25px" >
+                New Artist
             </a>
         </div>
 
@@ -118,12 +124,10 @@
                             </h5>
                             <p class="card-text">Genre: {{ artist.genre }}</p>
 
-                            <a href="{{ path('edit_artist', {'id': artist.id}) }}" class="btn btn-outline-light" >
+                            <a href="{{ path('edit_artist', {'id': artist.id}) }}" class="btn btn-outline-light" style="border-radius: 25px" >
                                 Edit Artist
                             </a>
-                            <a href="{{ path('new_artist') }}" class="btn btn-outline-light" >
-                                New Artist
-                            </a>
+
 
                             {#button trigger modal#}
                             <button type="button"
