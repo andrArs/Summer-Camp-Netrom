@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Schedule;
+use App\Form\ScheduleType;
 use App\Repository\ScheduleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -31,7 +33,7 @@ final class ScheduleController extends AbstractController
         ]);
     }
 
-    #[Route('/schedule/{id}', name: 'show_schedule', methods: ['GET'])]
+    #[Route('/schedule/show/{id}', name: 'show_schedule', methods: ['GET'])]
     public function getOneSchedule(int $id): Response
     {
         $schedule = $this->scheduleRepository->find($id);
@@ -44,7 +46,7 @@ final class ScheduleController extends AbstractController
         ]);
     }
 
-    #[Route('/schedule/{id}', name:'delete_schedule', methods: ['POST'] )]
+    #[Route('/schedule/delete/{id}', name:'delete_schedule', methods: ['POST'] )]
     public function deleteSchedule(int $id): Response
     {
         $schedule = $this->scheduleRepository->find($id);
@@ -56,4 +58,45 @@ final class ScheduleController extends AbstractController
 
         return $this->redirectToRoute('all_schedules');
     }
+
+    #[Route('/schedule/new', name:'new_schedule', methods: ['GET', 'POST'])]
+    public function newSchedule(Request $request): Response
+    {
+        $schedule= new Schedule();
+        $form = $this->createForm(ScheduleType::class, $schedule);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $this->entityManager->persist($schedule);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('all_schedules');
+
+        }
+        return $this->render('schedule/new.html.twig', [
+            'schedule' => $schedule,
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/schedule/edit/{id}', name:'edit_schedule', methods: ['GET', 'POST'])]
+    public function editSchedule(Request $request, int $id): Response
+    {
+        $schedule = $this->scheduleRepository->find($id);
+        if($schedule === null){
+            return $this->json(['error' => 'Schedule not found'], Response::HTTP_NOT_FOUND);
+        }
+        $form = $this->createForm(ScheduleType::class, $schedule);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+
+            $this->entityManager->flush();
+            return $this->redirectToRoute('all_schedules');
+
+        }
+        return $this->render('schedule/edit.html.twig', [
+            'schedule' => $schedule,
+            'form' => $form->createView()
+
+        ]);
+    }
+
 }

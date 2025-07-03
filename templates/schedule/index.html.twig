@@ -98,6 +98,10 @@
         <a href="{{ path('app_homepage') }}" class="btn btn-outline-light" >
             Back to Homepage
         </a>
+
+        <a href="{{ path('new_schedule') }}" class="btn btn-outline-light" >
+            New Schedule
+        </a>
         <h1 class="mb-5 text-center"
             style="color:#d4cfff;">Schedule</h1>
 
@@ -118,6 +122,10 @@
                                     See details
                                 </a>
                             </h5>
+
+                            <a href="{{ path('edit_schedule', {'id': schedule.id}) }}" class="btn btn-outline-light" >
+                              Edit Schedule
+                            </a>
 
 
                             {#button trigger modal#}
