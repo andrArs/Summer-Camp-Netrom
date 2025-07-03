@@ -98,6 +98,9 @@
         <a href="{{ path('app_homepage') }}" class="btn btn-outline-light" >
             Back to Homepage
         </a>
+        <a href="{{ path('new_stage') }}" class="btn btn-outline-light" >
+            New Stage
+        </a>
         <h1 class="mb-5 text-center"
             style="color:#d4cfff;">Stages</h1>
 
@@ -116,6 +119,10 @@
                                 </a>
                             </h5>
                             <p class="card-text">Genre: {{ stage.genre }}</p>
+
+                            <a href="{{ path('edit_stage',  {'id': stage.id}) }}" class="btn btn-outline-light" >
+                               Edit Stage
+                            </a>
 
 
                             {#button trigger modal#}

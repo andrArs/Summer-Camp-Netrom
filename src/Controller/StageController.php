@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Stage;
+use App\Form\StageType;
 use App\Repository\StageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -31,7 +33,7 @@ final class StageController extends AbstractController
         ]);
     }
 
-    #[Route('/stage/{id}', name: 'show_stage', methods: ['GET'])]
+    #[Route('/stage/show/{id}', name: 'show_stage', methods: ['GET'])]
     public function getSingleStage(int $id): Response
     {
         $stage = $this->stageRepository->find($id);
@@ -44,7 +46,7 @@ final class StageController extends AbstractController
         ]);
     }
 
-    #[Route('/stage/{id}', name:'delete_stage', methods: ['POST'] )]
+    #[Route('/stage/delete/{id}', name:'delete_stage', methods: ['POST'] )]
     public function deleteStage(int $id): Response
     {
         $stage = $this->stageRepository->find($id);
@@ -55,6 +57,47 @@ final class StageController extends AbstractController
         $this->entityManager->flush();
 
         return $this->redirectToRoute('all_stages');
+    }
+
+    #[Route('/stage/{id}/edit', name:'edit_stage', methods: ['GET', 'POST'])]
+    public function editStage(Request $request, int $id): Response
+    {
+        $stage=$this->stageRepository->find($id);
+        if($stage === null){
+            return $this->json(['error' => 'Stage not found'], Response::HTTP_NOT_FOUND);
+
+        }
+        $form=$this->createForm(StageType::class, $stage);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->flush();
+            return $this->redirectToRoute('show_stage', [
+                'id' => $stage->getId()
+            ]);
+
+        }
+        return $this->render('stage/edit.html.twig', [
+            'form' => $form->createView(),
+            'stage' => $stage
+        ]);
+    }
+
+    #[Route('/stage/new', name:'new_stage', methods: ['GET', 'POST'])]
+public function addStage(Request $request): Response
+    {
+        $stage=new Stage();
+        $form=$this->createForm(StageType::class, $stage);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($stage);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('all_stages');
+
+        }
+        return $this->render('stage/new.html.twig', [
+            'form' => $form->createView(),
+            'stage' => $stage
+        ]);
     }
 
 }
