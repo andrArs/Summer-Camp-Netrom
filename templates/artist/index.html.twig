@@ -110,6 +110,20 @@
 
         <h1 class="mb-5 text-center" style="color:#d4cfff;">Meet all of our artists!</h1>
 
+        <form method="get" action="{{ path('all_artists') }}" class="mb-4 d-flex justify-content-center">
+            <input
+                type="text"
+                name="search"
+                value="{{ search|default('') }}"
+                placeholder="Search by artist name..."
+                class="form-control w-50 me-2"
+                style="border-radius: 25px;"
+            >
+            <button type="submit" class="btn btn-outline-light" style="border-radius: 25px;">
+                Search
+            </button>
+        </form>
+
         <div class="row row-cols-1 row-cols-md-3 g-4">
 
             {% for artist in pagination %}

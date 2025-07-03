@@ -29,8 +29,14 @@ final class ArtistController extends AbstractController
     #[Route('/artist', name: 'all_artists', methods: ['GET'])]
     public function getAllArtists(Request $request, PaginatorInterface $paginator): Response
     {
+        $searchTerm = $request->query->get('search', '');
         $queryBuilder = $this->artistRepository->createQueryBuilder('a');
 
+        if (!empty($searchTerm)) {
+            $queryBuilder
+                ->where('a.name LIKE :search')
+                ->setParameter('search', '%' . $searchTerm . '%');
+        }
 
         $pagination = $paginator->paginate(
             $queryBuilder,
@@ -39,7 +45,8 @@ final class ArtistController extends AbstractController
         );
 
         return $this->render('artist/index.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'search' => $searchTerm
         ]);
     }
 
