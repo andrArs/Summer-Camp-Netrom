@@ -11,7 +11,7 @@ class UserDetails
 
 
     #[ORM\Id]
-    #[ORM\OneToOne(targetEntity: User::class)]
+    #[ORM\OneToOne(targetEntity: User::class,inversedBy:'details')]
     #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
     private ?User $user = null;
 
@@ -21,10 +21,7 @@ class UserDetails
     #[ORM\Column]
     private ?int $age = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+
 
     public function getUserId(): ?User
     {

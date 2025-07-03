@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Entity\UserDetails;
+use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -33,7 +36,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/{id}', name: 'show_user', methods: ['GET'])]
+    #[Route('/user/show/{id}', name: 'show_user', methods: ['GET'])]
     public function getOneUser(int $id): Response
     {
         $user = $this->userRepository->find($id);
@@ -45,7 +48,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/{id}', name: 'delete_user', methods: ['POST'])]
+    #[Route('/user/delete/{id}', name: 'delete_user', methods: ['POST'])]
 public function deleteUser(int $id): Response
     {
         $user = $this->userRepository->find($id);
@@ -56,5 +59,54 @@ public function deleteUser(int $id): Response
         $this->entityManager->flush();
 
         return $this->redirectToRoute('all_users');
+    }
+
+    #[Route('/user/new', name: 'new_user', methods: ['GET', 'POST'])]
+    public function newUser(Request $request): Response
+    {
+        $user= new User();
+        $userDetails = new UserDetails();
+
+        $userDetails->setUserId($user);
+        $user->setDetails($userDetails);
+
+        $form=$this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($user);
+            $this->entityManager->persist($userDetails);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('all_users');
+        }
+        return $this->render('user/newUser.html.twig', [
+            'form' => $form->createView(),
+            'user'=>$user,
+        ]);
+    }
+
+    #[Route('/user/edit/{id}', name: 'edit_user', methods: ['GET', 'POST'])]
+    public function editUser(Request $request, int $id): Response
+    {
+        $user = $this->userRepository->find($id);
+        if($user === null){
+            return $this->json(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
+
+        }
+        $userDetails =$user->getDetails();
+
+        $form=$this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (empty($user->getPassword()))
+                $user->setPassword($user->getPassword());
+
+
+           $this->entityManager->flush();
+            return $this->redirectToRoute('all_users');
+        }
+        return $this->render('user/editUser.html.twig', [
+            'form' => $form->createView(),
+            'user'=>$user,
+        ]);
     }
 }

@@ -98,6 +98,10 @@
         <a href="{{ path('app_homepage') }}" class="btn btn-outline-light" >
             Back to Homepage
         </a>
+
+        <a href="{{ path('new_user') }}" class="btn btn-outline-light" >
+            Create New Account
+        </a>
         <h1 class="mb-5 text-center"
             style="color:#d4cfff;">Users</h1>
 
@@ -114,6 +118,10 @@
                                 </a>
                             </h5>
                             <p class="card-text"> {{ user.role }} </p>
+
+                            <a href="{{ path('edit_user', {'id': user.id})  }}" class="btn btn-outline-light">
+                                Edit User
+                            </a>
 
 
                             {#button trigger modal#}

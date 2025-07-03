@@ -34,6 +34,9 @@ class User
     #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $purchases;
 
+    #[ORM\OneToOne(targetEntity: UserDetails::class,mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserDetails $details = null;
+
     public function __construct()
     {
         $this->purchases = new ArrayCollection();
@@ -122,4 +125,18 @@ class User
 
         return $this;
     }
+
+    public function getDetails(): ?UserDetails
+    {
+        return $this->details;
+    }
+
+    public function setDetails(?UserDetails $details): static
+    {
+        $this->details = $details;
+
+        return $this;
+    }
+
+
 }
