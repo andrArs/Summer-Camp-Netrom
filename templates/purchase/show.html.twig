@@ -49,7 +49,12 @@
     <div class="example-wrapper">
         <h1>Details about your purchase!</h1>
 
-        <h3>Owner: <strong>{{ purchase.user.email }}</strong></h3>
+        <h3>Owner: </h3>
+        <ul class="detail-list">
+            <li><strong>Name:</strong> {{purchase.user.details.name }}</li>
+            <li><strong>Age:</strong> {{purchase.user.details.age }}</li>
+            <li><strong>Email:</strong> {{purchase.user.email }}</li>
+        </ul>
 
         <h3>Festival Details:</h3>
         <ul class="detail-list">

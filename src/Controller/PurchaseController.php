@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Purchase;
+use App\Form\PurchaseType;
 use App\Repository\PurchaseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -32,7 +34,7 @@ final class PurchaseController extends AbstractController
         ]);
     }
 
-    #[Route('/purchase/{id}', name: 'show_purchase', methods: ['GET'])]
+    #[Route('/purchase/show/{id}', name: 'show_purchase', methods: ['GET'])]
     public function getOnePurchase(int $id): Response
     {
         $purchase = $this->purchaseRepository->find($id);
@@ -45,7 +47,7 @@ final class PurchaseController extends AbstractController
         ]);
     }
 
-    #[Route('purchase/{id}', name:'delete_purchase', methods: ['POST'])]
+    #[Route('purchase/delete/{id}', name:'delete_purchase', methods: ['POST'])]
     public function deletePurchase(int $id): Response
     {
         $purchase = $this->purchaseRepository->find($id);
@@ -56,5 +58,22 @@ final class PurchaseController extends AbstractController
         $this->entityManager->flush();
 
         return $this->redirectToRoute('all_purchases');
+    }
+
+    #[Route('/purchase/new', name: 'new_purchase', methods: ['GET', 'POST'])]
+public function newPurchase(Request $request): Response
+    {
+        $purchase = new Purchase();
+        $form = $this->createForm(PurchaseType::class, $purchase);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $this->entityManager->persist($purchase);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('show_purchase',['id' => $purchase->getId()]);
+        }
+        return $this->render('purchase/new.html.twig', [
+            'purchase' => $purchase,
+            'form' => $form->createView()
+        ]);
     }
 }
