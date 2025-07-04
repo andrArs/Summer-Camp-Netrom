@@ -11,6 +11,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class UserController extends AbstractController
@@ -62,7 +63,7 @@ public function deleteUser(int $id): Response
     }
 
     #[Route('/user/new', name: 'new_user', methods: ['GET', 'POST'])]
-    public function newUser(Request $request): Response
+    public function newUser(Request $request,UserPasswordHasherInterface $passwordHasher): Response
     {
         $user= new User();
         $userDetails = new UserDetails();
@@ -73,10 +74,17 @@ public function deleteUser(int $id): Response
         $form=$this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $plainPassword = $form->get('password')->getData();
+
+            // Hash the password
+            $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+            $user->setPassword($hashedPassword);
+
             $this->entityManager->persist($user);
             $this->entityManager->persist($userDetails);
             $this->entityManager->flush();
-            return $this->redirectToRoute('all_users');
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('user/newUser.html.twig', [
             'form' => $form->createView(),

@@ -41,7 +41,7 @@ final class ArtistController extends AbstractController
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
-            9 //artists per page
+            6 //artists per page
         );
 
         return $this->render('artist/index.html.twig', [

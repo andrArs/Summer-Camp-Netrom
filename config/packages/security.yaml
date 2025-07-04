@@ -5,13 +5,54 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider
+            form_login:
+                # "app_login" is the name of the route created previously
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
+#            custom_authenticators:
+#                - App\Security\LoginFormAuthenticator
+            entry_point: form_login
+
+
+
+
+#            json_login:
+#                # api_login is a route we will create below
+#                check_path: api_login
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                target: app_login
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                # by default, the feature is enabled by checking a checkbox in the
+                # login form, uncomment the following line to always enable it.
+                #always_remember_me: true
+#            http_basic:
+#                realm: Secured Area
+
+#            x509:
+#                provider: your_user_provider
+
+
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -22,8 +63,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/user, roles: ROLE_USER }
+
 
 when@test:
     security:
