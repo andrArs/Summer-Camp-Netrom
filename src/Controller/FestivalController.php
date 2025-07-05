@@ -12,13 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class FestivalController extends AbstractController
 {
     public function __construct(private readonly FestivalRepository $festivalRepository, private readonly EntityManagerInterface $entityManager){}
 
 
-    #[Route('/festival/show/{id}', name: 'show_festival', methods: ['GET'])]
+    #[Route('/public/festival/show/{id}', name: 'show_festival', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function getOneFestival(int $id): Response
     {
         $festival = $this->festivalRepository->find($id);
@@ -30,7 +32,8 @@ final class FestivalController extends AbstractController
         ]);
     }
 
-    #[Route('/festival', name: 'all_festivals', methods: ['GET'])]
+    #[Route('/public/festival', name: 'all_festivals', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function getAllFestivals(Request $request, PaginatorInterface $paginator): Response
     {
         $queryBuilder = $this->festivalRepository->createQueryBuilder('f');
@@ -47,7 +50,8 @@ final class FestivalController extends AbstractController
         ]);
     }
 
-    #[Route('/festival/delete/{id}', name: 'delete_festival', methods: ['POST'])]
+    #[Route('/admin/festival/delete/{id}', name: 'delete_festival', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function deleteFestival(int $id): Response
     {
         $festival = $this->festivalRepository->find($id);
@@ -62,7 +66,8 @@ final class FestivalController extends AbstractController
         return $this->redirectToRoute('all_festivals');
     }
 
-    #[Route('/festival/new', name: 'new_festival', methods: ['GET', 'POST'])]
+    #[Route('/admin/festival/new', name: 'new_festival', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function newFestival(Request $request): Response
     {
         $festival=new Festival();
@@ -80,7 +85,8 @@ final class FestivalController extends AbstractController
         ]);
     }
 
-    #[Route('/festival/{id}/edit', name: 'edit_festival', methods: ['GET', 'POST'])]
+    #[Route('/admin/festival/{id}/edit', name: 'edit_festival', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function editFestival(Request $request, int $id): Response
     {
         $festival = $this->festivalRepository->find($id);

@@ -93,6 +93,20 @@
         <h3 style="color: #2e1a47; align-content: center; ">Location: {{ festival.location }}</h3>
         <h3  style="color: #2e1a47; align-content: center; ">Date: {{ festival.startDate|date('Y-m-d') }} : {{ festival.endDate|date('Y-m-d') }}</h3>
 
+
+        {% if is_granted('ROLE_ADMIN') %}
+
+            <a href="{{ path('edit_festival', {'id': festival.id}) }}"
+               class="btn btn-outline-light"
+               style="border-radius: 25px"
+            >
+                Edit Festival
+            </a>
+
+        {% endif %}
+
+
+        {% if is_granted('ROLE_ADMIN') %}
         <div class="btn-container">
             <button type="button"
                     class="btn btn-danger"
@@ -103,6 +117,8 @@
 
 
         </div>
+
+        {% endif %}
 
 {#       modal#}
         <div class="modal fade"

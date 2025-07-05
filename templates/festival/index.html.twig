@@ -96,16 +96,29 @@
             >
                 Homepage
             </a>
+
+            {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('new_festival') }}"
                class="btn btn-outline-light me-3"
                style="border-radius: 25px" >
                 New Festival
             </a>
-            <a href="{{ path('app_logout') }}"
-               class="btn btn-outline-light me-3"
-               style="border-radius: 25px" >
-                Logout
-            </a>
+            {% endif %}
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('app_logout') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log out
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log in
+                </a>
+            {% endif %}
+
         </div>
     <h1 class="mb-5 text-center"
         style="color:#d4cfff;">Festivals</h1>
@@ -125,6 +138,9 @@
                     </h5>
                     <p class="card-text">{{ festival.location }}</p>
 
+
+                    {% if is_granted('ROLE_ADMIN') %}
+
                     <a href="{{ path('edit_festival', {'id': festival.id}) }}"
                        class="btn btn-outline-light"
                        style="border-radius: 25px"
@@ -139,9 +155,12 @@
                             data-bs-target="#deleteModal{{ festival.id }}">
                         Delete
                     </button>
+                    {% endif %}
 
                 </div>
             </div>
+
+
 
             {#modal#}
             <div class="modal fade"
