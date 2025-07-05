@@ -82,7 +82,7 @@
         <div style="text-align: left;">
             <a href="{{ path('all_lineup') }}" class="btn-back">← Back to list</a>
         </div>
-        <div class="h2 text-center">Create new lineup</div>
+        <div class="h2 text-center" style="padding-top: 12px">Create new lineup</div>
 
         {{ form_start(form) }}
         <div class="form-group">
@@ -104,7 +104,7 @@
         </div>
 
         <div class="form-group text-center mt-3">
-            {{ form_row(form.save) }}
+            {{ form_row(form.save,{'attr': {'style': 'border-radius: 20px; border: 2px solid #5d4587;padding: 8px 10px;' }}) }}
         </div>
 
         {{ form_end(form) }}
