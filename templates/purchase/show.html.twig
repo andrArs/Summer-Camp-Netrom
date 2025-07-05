@@ -71,6 +71,8 @@
         </ul>
 
 
+        {% if is_granted('ROLE_ADMIN') %}
+
         {#            button trigger modal#}
         <div class="btn-container">
             <button type="button"
@@ -79,6 +81,8 @@
                     data-bs-target="#deleteModal{{ purchase.id }}">
                 Delete
             </button>
+
+            {% endif %}
 
             <a href="{{ path('all_purchases') }}" class="btn btn-outline-secondary">Back to list</a>
         </div>

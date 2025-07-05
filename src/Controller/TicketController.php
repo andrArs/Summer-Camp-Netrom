@@ -11,12 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class TicketController extends AbstractController
 {
     public function __construct(private readonly TicketRepository $ticketRepository,  private readonly EntityManagerInterface $entityManager){}
 
-    #[Route('/ticket', name: 'all_tickets', methods: ['GET'])]
+    #[Route('/public/ticket', name: 'all_tickets', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function getAllTickets(Request $request, PaginatorInterface $paginator): Response
     {
         $queryBuilder = $this->ticketRepository->createQueryBuilder('t');
@@ -32,7 +34,8 @@ final class TicketController extends AbstractController
             'pagination' => $pagination
         ]);
     }
-    #[Route('/ticket/show/{id}', name: 'show_ticket', methods: ['GET'])]
+    #[Route('/public/ticket/show/{id}', name: 'show_ticket', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function getOneTicket(int $id): Response
     {
         $ticket = $this->ticketRepository->find($id);
@@ -44,7 +47,8 @@ final class TicketController extends AbstractController
         ]);
     }
 
-    #[Route('/ticket/delete/{id}', name:'delete_ticket', methods: ['POST'] )]
+    #[Route('/admin/ticket/delete/{id}', name:'delete_ticket', methods: ['POST'] )]
+    #[IsGranted('ROLE_ADMIN')]
     public function deleteTicket(int $id): Response
     {
         $ticket = $this->ticketRepository->find($id);
@@ -57,7 +61,8 @@ final class TicketController extends AbstractController
         return $this->redirectToRoute('all_tickets');
     }
 
-    #[Route('/ticket/new',name:'new_ticket', methods: ['GET', 'POST'])]
+    #[Route('/admin/ticket/new',name:'new_ticket', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function newTicket(Request $request): Response
     {
         $ticket=new Ticket();
@@ -79,7 +84,8 @@ final class TicketController extends AbstractController
 
     }
 
-    #[Route('/ticket/{id}/edit', name:'edit_ticket', methods: ['GET', 'POST'])]
+    #[Route('/admin/ticket/{id}/edit', name:'edit_ticket', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
 public function editTicket(Request $request, int $id): Response
     {
         $ticket=$this->ticketRepository->find($id);

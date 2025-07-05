@@ -72,6 +72,11 @@
             class="image">
 
 
+        {% if is_granted('ROLE_ADMIN') %}
+
+        <a href="{{ path('edit_ticket', {'id': ticket.id}) }}" class="btn btn-outline-secondary" >
+            Edit Ticket
+        </a>
 
 
         {#            button trigger modal#}
@@ -82,6 +87,7 @@
                     data-bs-target="#deleteModal{{ ticket.id }}">
                 Delete
             </button>
+            {% endif %}
 
             <a href="{{ path('all_tickets') }}" class="btn btn-outline-secondary">Back to list</a>
         </div>

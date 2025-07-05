@@ -95,13 +95,37 @@
     </style>
 
     <div class="container mt-4">
-        <a href="{{ path('app_homepage') }}" class="btn btn-outline-light" >
-            Back to Homepage
-        </a>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ path('app_homepage') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px"
+            >
+                Homepage
+            </a>
 
-        <a href="{{ path('new_purchase') }}" class="btn btn-outline-light" >
-            New Purchase
-        </a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('new_purchase') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    New Purchase
+                </a>
+            {% endif %}
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('app_logout') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log out
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log in
+                </a>
+            {% endif %}
+
+        </div>
 
         <h1 class="mb-5 text-center"
             style="color:#d4cfff;">All tickets</h1>
@@ -117,6 +141,8 @@
                             <p class="card-text">Owner: {{ purchase.user.email }}</p>
                             <p class="card-text">Festival: {{ purchase.festival.name }}</p>
 
+                            {% if is_granted('ROLE_ADMIN') %}
+
                             <h5 class="card-title">
                                 <a href="{{ path('show_purchase', {'id': purchase.id}) }}">
                                     See details
@@ -131,6 +157,8 @@
                                     data-bs-target="#deleteModal{{ purchase.id }}">
                                 Delete
                             </button>
+
+                            {% endif %}
 
                         </div>
                     </div>

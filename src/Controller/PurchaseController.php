@@ -11,13 +11,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class PurchaseController extends AbstractController
 {
 
     public function __construct(private readonly PurchaseRepository $purchaseRepository,  private readonly EntityManagerInterface $entityManager){}
 
-    #[Route('/purchase', name: 'all_purchases', methods: ['GET'])]
+    #[Route('/admin/purchase', name: 'all_purchases', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function getAllPurchases(Request $request, PaginatorInterface $paginator): Response
     {
         $queryBuilder = $this->purchaseRepository->createQueryBuilder('p');
@@ -34,7 +36,8 @@ final class PurchaseController extends AbstractController
         ]);
     }
 
-    #[Route('/purchase/show/{id}', name: 'show_purchase', methods: ['GET'])]
+    #[Route('/admin/purchase/show/{id}', name: 'show_purchase', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function getOnePurchase(int $id): Response
     {
         $purchase = $this->purchaseRepository->find($id);
@@ -47,7 +50,8 @@ final class PurchaseController extends AbstractController
         ]);
     }
 
-    #[Route('purchase/delete/{id}', name:'delete_purchase', methods: ['POST'])]
+    #[Route('/admin/purchase/delete/{id}', name:'delete_purchase', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function deletePurchase(int $id): Response
     {
         $purchase = $this->purchaseRepository->find($id);
@@ -60,7 +64,8 @@ final class PurchaseController extends AbstractController
         return $this->redirectToRoute('all_purchases');
     }
 
-    #[Route('/purchase/new', name: 'new_purchase', methods: ['GET', 'POST'])]
+    #[Route('/admin/purchase/new', name: 'new_purchase', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
 public function newPurchase(Request $request): Response
     {
         $purchase = new Purchase();
