@@ -68,7 +68,11 @@
             <li style="margin-bottom: 0.5rem;"><strong style="color: #7b2ee8;">Role:</strong> {{ user.role }}</li>
         </ul>
 
+        {% if is_granted('ROLE_ADMIN') %}
 
+        <a href="{{ path('edit_user', {'id': user.id})  }}" class="btn btn-outline-secondary" style="border-radius: 25px">
+            Edit User
+        </a>
 
 
         {#            button trigger modal#}
@@ -79,6 +83,8 @@
                     data-bs-target="#deleteModal{{ user.id }}">
                 Delete
             </button>
+
+            {% endif %}
 
             <a href="{{ path('all_users') }}" class="btn btn-outline-secondary" style="border-radius: 15px">Back to list</a>
         </div>

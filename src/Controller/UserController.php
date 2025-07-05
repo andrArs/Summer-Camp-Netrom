@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UserController extends AbstractController
 {
@@ -20,7 +21,8 @@ final class UserController extends AbstractController
     {
     }
 
-    #[Route('/app/user', name: 'all_users', methods: ['GET'])]
+    #[Route('/admin/app/user', name: 'all_users', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function getAllUsers(Request $request,PaginatorInterface $paginator): Response
     {
         $queryBuilder = $this->userRepository->createQueryBuilder('u');
@@ -37,7 +39,8 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/app/user/show/{id}', name: 'show_user', methods: ['GET'])]
+    #[Route('/admin/app/user/show/{id}', name: 'show_user', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function getOneUser(int $id): Response
     {
         $user = $this->userRepository->find($id);
@@ -49,8 +52,9 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/app/user/delete/{id}', name: 'delete_user', methods: ['POST'])]
-public function deleteUser(int $id): Response
+    #[Route('/admin/app/user/delete/{id}', name: 'delete_user', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteUser(int $id): Response
     {
         $user = $this->userRepository->find($id);
         if($user === null){
@@ -62,7 +66,8 @@ public function deleteUser(int $id): Response
         return $this->redirectToRoute('all_users');
     }
 
-    #[Route('/app/user/new', name: 'new_user', methods: ['GET', 'POST'])]
+    #[Route('/admin/app/user/new', name: 'new_user', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function newUser(Request $request,UserPasswordHasherInterface $passwordHasher): Response
     {
         $user= new User();
@@ -92,7 +97,8 @@ public function deleteUser(int $id): Response
         ]);
     }
 
-    #[Route('/app/user/{id}/edit', name: 'edit_user', methods: ['GET', 'POST'])]
+    #[Route('/admin/app/user/{id}/edit', name: 'edit_user', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function editUser(Request $request, int $id): Response
     {
         $user = $this->userRepository->find($id);
