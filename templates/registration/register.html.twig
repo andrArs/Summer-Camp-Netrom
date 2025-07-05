@@ -3,17 +3,118 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+
+    <style>
+        body {
+            background-color: #2e1a47;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+
+        .wrapper {
+            max-width: 550px;
+            border-radius: 10px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(123, 46, 232, 0.1);
+        }
+
+        .h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #5d4587;
+            text-shadow: 1px 1px 4px #2e1a47;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            font-weight: 500;
+            color: #7b2ee8;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+            border: none;
+            border-bottom: 2px solid #7b2ee8;
+            background-color: transparent;
+            border-radius: 0;
+            padding: 8px 6px;
+            width: 100%;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #7b2ee8;
+            box-shadow: 0 1px 5px rgba(123, 46, 232, 0.2);
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin: 20px auto 0;
+            color: #6f42c1;
+            border: 1px solid #6f42c1;
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-decoration: #6b21a8;
+            transition: background-color 0.3s;
+
+
+        }
+
+
+        .btn-back:hover {
+            background-color: #f3e6f5;
+        }
+
+
+    </style>
+
+<div class="wrapper bg-white">
+    <div class="h2 text-center">Sign Up</div>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+    <div class="form-group">
+        {{ form_label(registrationForm.email) }}
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(registrationForm.email) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(registrationForm.plainPassword, 'Password') }}
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(registrationForm.plainPassword) }}
+    </div>
+
+    <div class="form-group">
+        <label style="display: flex; align-items: center;">
+            {{ form_widget(registrationForm.agreeTerms, {'attr': {'style': 'margin-right: 8px;'}}) }}
+            {{ form_label(registrationForm.agreeTerms) }}
+        </label>
+        {{ form_errors(registrationForm.agreeTerms) }}
+    </div>
+
+    <div style="text-align: center; margin-top: 20px; color: #43166a;">
+        Do you already have an account?
+        <a href="{{ path('app_login') }}"   style="color: #6D28D9">Sign in</a>
+    </div>
+
+    <button type="submit" class="btn-back">Register</button>
+
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}
