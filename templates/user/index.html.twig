@@ -74,7 +74,7 @@
         }
 
         .pagination a:hover {
-            background-color: #7b2ff7;
+            /*background-color: #7b2ff7;*/
             color: white;
             box-shadow: 0 0 8px #7b2ff7;
         }
@@ -95,13 +95,25 @@
     </style>
 
     <div class="container mt-4">
-        <a href="{{ path('app_homepage') }}" class="btn btn-outline-light" >
-            Back to Homepage
-        </a>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ path('app_homepage') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px"
+            >
+                Homepage
+            </a>
+            <a href="{{ path('new_user') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                New User
+            </a>
+            <a href="{{ path('app_logout') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Logout
+            </a>
+        </div>
 
-        <a href="{{ path('new_user') }}" class="btn btn-outline-light" >
-            Create New Account
-        </a>
         <h1 class="mb-5 text-center"
             style="color:#d4cfff;">Users</h1>
 
@@ -119,7 +131,7 @@
                             </h5>
                             <p class="card-text"> {{ user.role }} </p>
 
-                            <a href="{{ path('edit_user', {'id': user.id})  }}" class="btn btn-outline-light">
+                            <a href="{{ path('edit_user', {'id': user.id})  }}" class="btn btn-outline-light" style="border-radius: 25px">
                                 Edit User
                             </a>
 
@@ -164,7 +176,7 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-secondary" style="border-radius: 25px" data-bs-dismiss="modal">Cancel</button>
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </div>
                                 </form>

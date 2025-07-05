@@ -44,7 +44,7 @@ final class UserController extends AbstractController
         if($user === null){
             return $this->json(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/showUser.html.twig', [
             'user' => $user,
         ]);
     }

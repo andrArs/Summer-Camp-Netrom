@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HelloController!{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #2e1a47;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        .example-wrapper {
+            margin: 2em auto;
+            max-width: 700px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(111, 66, 193, 0.3);
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn-danger {
+            border-radius: 15px;
+            background-color: #6f42c1;
+            border-color: #6f42c1;
+        }
+
+        .btn-danger:hover {
+            background-color: #5a35a2;
+            border-color: #5a35a2;
+        }
+
+        .modal-content {
+            border: 2px solid #6f42c1;
+            border-radius: 12px;
+        }
+
+        .modal-header {
+            background-color: #f3e6f5;
+        }
+
+    </style>
+
+    <div class="example-wrapper">
+        <h1
+            style="color: #43166a;
+             font-family: 'Poppins', sans-serif;
+             font-size: 2rem;
+              margin-bottom: 1.5rem;">
+            Details about this user!
+        </h1>
+        <ul
+            style="list-style: none;
+            padding: 0;
+             text-align: left;
+              color: #4f0e88;
+              font-family: 'Poppins', sans-serif;
+              font-size: 1.5rem;">
+            <li style="margin-bottom: 0.5rem;"><strong style="color: #7b2ee8;">Name:</strong> {{ user.details.name }}</li>
+            <li style="margin-bottom: 0.5rem;"><strong style="color: #7b2ee8;">Age:</strong> {{ user.details.age }}</li>
+            <li style="margin-bottom: 0.5rem;"><strong style="color: #7b2ee8;">Email:</strong> {{ user.email }}</li>
+            <li style="margin-bottom: 0.5rem;"><strong style="color: #7b2ee8;">Role:</strong> {{ user.role }}</li>
+        </ul>
+
+
+
+
+        {#            button trigger modal#}
+        <div class="btn-container">
+            <button type="button"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal{{ user.id }}">
+                Delete
+            </button>
+
+            <a href="{{ path('all_users') }}" class="btn btn-outline-secondary" style="border-radius: 15px">Back to list</a>
+        </div>
+
+        {#            modal#}
+        <div class="modal fade"
+             id="deleteModal{{ user.id }}"
+             tabindex="-1"
+             aria-labelledby="deleteModalLabel{{ user.id }}"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <form action="{{ path('delete_user', {'id': user.id}) }}" method="post">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title"
+                                id="deleteModalLabel{{ user.id }}">Are you sure you want to delete the this user?</h5>
+
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" style="border-radius: 20px;" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+{% endblock %}

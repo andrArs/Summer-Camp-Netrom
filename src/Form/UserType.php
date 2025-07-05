@@ -27,9 +27,12 @@ class UserType extends AbstractType{
                     'placeholder' => '********'
                 ]
             ])
-            ->add('role', HiddenType::class, [
-                'data' => 'ROLE_USER',
-                'mapped' => true,
+            ->add('role', TextType::class, [
+                'label' => 'Role',
+                'attr' => [
+                    'class' => 'custom-input',
+                    'placeholder' => 'e.g. ROLE_USER'
+                ]
             ])
             ->add('token', HiddenType::class, [
                 'data' => 'aaaaa',
