@@ -55,9 +55,31 @@
         <a href="{{ path('all_stages') }}" class="btn-home"> Stages</a>
         <a href="{{ path('all_schedules') }}" class="btn-home"> Schedules</a>
         <a href="{{ path('all_tickets') }}" class="btn-home"> Tickets</a>
-        <a href="{{ path('all_users') }}" class="btn-home"> Users</a>
-        <a href="{{ path('all_purchases') }}" class="btn-home"> Purchases</a>
         <a href="{{ path('all_lineup') }}" class="btn-home"> Lineup</a>
-        <div style="margin-top: 50px;"> <a href="{{ path('app_logout') }}"  class="btn-home">Logout</a>  </div>
+
+        {% if is_granted('ROLE_USER') %}
+        <a href="{{ path('all_purchases') }}" class="btn-home"> Purchases</a>
+        {% endif %}
+
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('all_users') }}" class="btn-home"> Users</a>
+       {% endif %}
+
+
+        <div style="margin-top: 50px;">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('app_logout') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log out
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log in
+                </a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
