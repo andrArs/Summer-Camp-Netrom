@@ -96,16 +96,29 @@
             >
                 Homepage
             </a>
+
+            {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('new_lineup') }}"
                class="btn btn-outline-light me-3"
                style="border-radius: 25px" >
                 Create New Lineup
             </a>
-            <a href="{{ path('app_logout') }}"
-               class="btn btn-outline-light me-3"
-               style="border-radius: 25px" >
-                Logout
-            </a>
+            {% endif %}
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('app_logout') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log out
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log in
+                </a>
+            {% endif %}
+
         </div>
         <h1 class="mb-5 text-center"
             style="color:#d4cfff;">Lineup</h1>
@@ -133,6 +146,7 @@
                                 {{ fa.schedule.getEndTime() ? fa.schedule.getEndTime()|date('H:i') : 'N/A' }}
                             </h5>
 
+                            {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('edit_lineup',{'id': fa.id})  }}" class="btn btn-outline-light" style="border-radius: 25px;">
                                 Edit lineup
                             </a>
@@ -145,6 +159,7 @@
                                     data-bs-target="#deleteModal{{ fa.id }}">
                                 Delete
                             </button>
+                            {% endif %}
 
                         </div>
                     </div>

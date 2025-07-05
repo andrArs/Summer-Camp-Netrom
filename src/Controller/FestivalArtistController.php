@@ -11,12 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class FestivalArtistController extends AbstractController
 {
     public function __construct(private readonly FestivalArtistRepository $festivalArtistRepository, private readonly EntityManagerInterface $entityManager){}
 
-    #[Route('/festivalArtist', name: 'all_lineup', methods: ['GET'])]
+    #[Route('/public/festivalArtist', name: 'all_lineup', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function getAll(Request $request, PaginatorInterface $paginator): Response
     {
         $queryBuilder = $this->festivalArtistRepository->createQueryBuilder('a');
@@ -33,7 +35,8 @@ final class FestivalArtistController extends AbstractController
         ]);
     }
 
-    #[Route('/festivalArtist/festival/{id}', name: 'show_festival_lineup', methods: ['GET'])]
+    #[Route('/public/festivalArtist/festival/{id}', name: 'show_festival_lineup', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function festivalLineup(int $id):Response{
 
         $festival = $this->festivalArtistRepository->findBy(['festival'=>$id]);
@@ -42,7 +45,8 @@ final class FestivalArtistController extends AbstractController
         ]);
     }
 
-    #[Route('/festivalArtist/artist/{id}', name: 'show_festival_artist', methods: ['GET'])]
+    #[Route('/public/festivalArtist/artist/{id}', name: 'show_festival_artist', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function showArtistSchedule(int $id):Response{
         $artist=$this->festivalArtistRepository->findBy(['artist_id'=>$id]);
         return $this->render('festival_artist/artistSchedule.html.twig', [
@@ -50,8 +54,9 @@ final class FestivalArtistController extends AbstractController
         ]);
     }
 
-    #[Route('/festivalArtist/delete/{id}', name:'delete_lineup', methods: ['POST'])]
-public function deleteLineup(int $id): Response
+    #[Route('/admin/festivalArtist/delete/{id}', name:'delete_lineup', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteLineup(int $id): Response
     {
         $fa = $this->festivalArtistRepository->find($id);
 
@@ -65,7 +70,8 @@ public function deleteLineup(int $id): Response
         return $this->redirectToRoute('all_lineup');
     }
 
-    #[Route('/festivalArtist/new', name: 'new_lineup', methods: ['GET', 'POST'])]
+    #[Route('/admin/festivalArtist/new', name: 'new_lineup', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function newLineup(Request $request): Response{
         $festivalArtist = new FestivalArtist();
         $form=$this->createForm(LineupType::class,$festivalArtist);
@@ -82,7 +88,8 @@ public function deleteLineup(int $id): Response
         ]);
     }
 
-    #[Route('/festivalArtist/{id}/edit', name: 'edit_lineup', methods: ['GET', 'POST'])]
+    #[Route('/admin/festivalArtist/{id}/edit', name: 'edit_lineup', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function editArtistFestival(Request $request, int $id): Response
     {
         $lineup = $this->festivalArtistRepository->find($id);
