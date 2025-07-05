@@ -73,7 +73,7 @@
 
 
         {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('edit_stage',  {'id': stage.id}) }}" class="btn btn-outline-light" >
+        <a href="{{ path('edit_stage',  {'id': stage.id}) }}" class="btn btn-danger" >
             Edit Stage
         </a>
 

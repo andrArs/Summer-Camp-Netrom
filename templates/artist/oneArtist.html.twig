@@ -98,7 +98,7 @@
             <h4  style="color: #2e1a47; align-content: center;"> Genre: {{ artist.genre }}</h4>
 
         {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('edit_artist', {'id': artist.id}) }}" class="btn btn-danger" style="border-radius: 25px" >
+        <a href="{{ path('edit_artist', {'id': artist.id}) }}" class="btn-back" style="border-radius: 25px" >
             Edit Artist
         </a>
         {% endif %}
