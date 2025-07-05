@@ -11,12 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ScheduleController extends AbstractController
 {
     public function __construct(private readonly ScheduleRepository $scheduleRepository,  private readonly EntityManagerInterface $entityManager){}
 
-    #[Route('/schedule', name: 'all_schedules', methods: ['GET'])]
+    #[Route('/public/schedule', name: 'all_schedules', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function getAllSchedules(Request $request, PaginatorInterface $paginator): Response
     {
         $queryBuilder = $this->scheduleRepository->createQueryBuilder('s');
@@ -33,7 +35,8 @@ final class ScheduleController extends AbstractController
         ]);
     }
 
-    #[Route('/schedule/show/{id}', name: 'show_schedule', methods: ['GET'])]
+    #[Route('/public/schedule/show/{id}', name: 'show_schedule', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function getOneSchedule(int $id): Response
     {
         $schedule = $this->scheduleRepository->find($id);
@@ -46,7 +49,8 @@ final class ScheduleController extends AbstractController
         ]);
     }
 
-    #[Route('/schedule/delete/{id}', name:'delete_schedule', methods: ['POST'] )]
+    #[Route('/admin/schedule/delete/{id}', name:'delete_schedule', methods: ['POST'] )]
+    #[IsGranted('ROLE_ADMIN')]
     public function deleteSchedule(int $id): Response
     {
         $schedule = $this->scheduleRepository->find($id);
@@ -59,7 +63,8 @@ final class ScheduleController extends AbstractController
         return $this->redirectToRoute('all_schedules');
     }
 
-    #[Route('/schedule/new', name:'new_schedule', methods: ['GET', 'POST'])]
+    #[Route('/admin/schedule/new', name:'new_schedule', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function newSchedule(Request $request): Response
     {
         $schedule= new Schedule();
@@ -77,7 +82,8 @@ final class ScheduleController extends AbstractController
         ]);
     }
 
-    #[Route('/schedule/edit/{id}', name:'edit_schedule', methods: ['GET', 'POST'])]
+    #[Route('/admin/schedule/edit/{id}', name:'edit_schedule', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function editSchedule(Request $request, int $id): Response
     {
         $schedule = $this->scheduleRepository->find($id);

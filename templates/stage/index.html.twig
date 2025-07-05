@@ -95,12 +95,38 @@
     </style>
 
     <div class="container mt-4">
-        <a href="{{ path('app_homepage') }}" class="btn btn-outline-light" >
-            Back to Homepage
-        </a>
-        <a href="{{ path('new_stage') }}" class="btn btn-outline-light" >
-            New Stage
-        </a>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ path('app_homepage') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px"
+            >
+                Homepage
+            </a>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('new_stage') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    New Stage
+                </a>
+            {% endif %}
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('app_logout') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log out
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log in
+                </a>
+            {% endif %}
+
+        </div>
+
         <h1 class="mb-5 text-center"
             style="color:#d4cfff;">Stages</h1>
 
@@ -120,6 +146,7 @@
                             </h5>
                             <p class="card-text">Genre: {{ stage.genre }}</p>
 
+                            {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('edit_stage',  {'id': stage.id}) }}" class="btn btn-outline-light" >
                                Edit Stage
                             </a>
@@ -132,6 +159,7 @@
                                     data-bs-target="#deleteModal{{ stage.id }}">
                                 Delete
                             </button>
+                            {% endif %}
 
                         </div>
                     </div>

@@ -95,13 +95,39 @@
     </style>
 
     <div class="container mt-4">
-        <a href="{{ path('app_homepage') }}" class="btn btn-outline-light" >
-            Back to Homepage
-        </a>
+        <div class="container mt-4">
+            <div class="d-flex justify-content-end mb-3">
+                <a href="{{ path('app_homepage') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px"
+                >
+                    Homepage
+                </a>
 
-        <a href="{{ path('new_schedule') }}" class="btn btn-outline-light" >
-            New Schedule
-        </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('new_schedule') }}"
+                       class="btn btn-outline-light me-3"
+                       style="border-radius: 25px" >
+                        New Schedule
+                    </a>
+                {% endif %}
+
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ path('app_logout') }}"
+                       class="btn btn-outline-light me-3"
+                       style="border-radius: 25px" >
+                        Log out
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_login') }}"
+                       class="btn btn-outline-light me-3"
+                       style="border-radius: 25px" >
+                        Log in
+                    </a>
+                {% endif %}
+
+            </div>
+
         <h1 class="mb-5 text-center"
             style="color:#d4cfff;">Schedule</h1>
 
@@ -123,6 +149,7 @@
                                 </a>
                             </h5>
 
+                            {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('edit_schedule', {'id': schedule.id}) }}" class="btn btn-outline-light" >
                               Edit Schedule
                             </a>
@@ -135,6 +162,7 @@
                                     data-bs-target="#deleteModal{{ schedule.id }}">
                                 Delete
                             </button>
+                            {% endif %}
 
                         </div>
                     </div>
