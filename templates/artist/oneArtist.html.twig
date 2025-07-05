@@ -97,6 +97,13 @@
         <h3 style="color: #4f0e88; align-content: center;" > {{ artist.name }}</h3>
             <h4  style="color: #2e1a47; align-content: center;"> Genre: {{ artist.genre }}</h4>
 
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('edit_artist', {'id': artist.id}) }}" class="btn btn-danger" style="border-radius: 25px" >
+            Edit Artist
+        </a>
+        {% endif %}
+
+        {% if is_granted('ROLE_ADMIN') %}
 {#            button trigger modal#}
             <div class="btn-container">
                 <button type="button"
@@ -105,6 +112,8 @@
                         data-bs-target="#deleteModal{{ artist.id }}">
                     Delete
                 </button>
+
+                {% endif %}
 
 
             </div>

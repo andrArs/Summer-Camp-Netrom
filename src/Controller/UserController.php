@@ -20,7 +20,7 @@ final class UserController extends AbstractController
     {
     }
 
-    #[Route('/user', name: 'all_users', methods: ['GET'])]
+    #[Route('/app/user', name: 'all_users', methods: ['GET'])]
     public function getAllUsers(Request $request,PaginatorInterface $paginator): Response
     {
         $queryBuilder = $this->userRepository->createQueryBuilder('u');
@@ -37,7 +37,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/show/{id}', name: 'show_user', methods: ['GET'])]
+    #[Route('/app/user/show/{id}', name: 'show_user', methods: ['GET'])]
     public function getOneUser(int $id): Response
     {
         $user = $this->userRepository->find($id);
@@ -49,7 +49,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/delete/{id}', name: 'delete_user', methods: ['POST'])]
+    #[Route('/app/user/delete/{id}', name: 'delete_user', methods: ['POST'])]
 public function deleteUser(int $id): Response
     {
         $user = $this->userRepository->find($id);
@@ -62,7 +62,7 @@ public function deleteUser(int $id): Response
         return $this->redirectToRoute('all_users');
     }
 
-    #[Route('/user/new', name: 'new_user', methods: ['GET', 'POST'])]
+    #[Route('/app/user/new', name: 'new_user', methods: ['GET', 'POST'])]
     public function newUser(Request $request,UserPasswordHasherInterface $passwordHasher): Response
     {
         $user= new User();
@@ -92,7 +92,7 @@ public function deleteUser(int $id): Response
         ]);
     }
 
-    #[Route('/user/{id}/edit', name: 'edit_user', methods: ['GET', 'POST'])]
+    #[Route('/app/user/{id}/edit', name: 'edit_user', methods: ['GET', 'POST'])]
     public function editUser(Request $request, int $id): Response
     {
         $user = $this->userRepository->find($id);

@@ -99,16 +99,29 @@
             >
                 Homepage
             </a>
+
+            {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('new_artist') }}"
                class="btn btn-outline-light me-3"
                style="border-radius: 25px" >
                 New Artist
             </a>
+            {% endif %}
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <a href="{{ path('app_logout') }}"
                class="btn btn-outline-light me-3"
                style="border-radius: 25px" >
-                Logout
+                Log out
             </a>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log in
+                </a>
+            {% endif %}
+
         </div>
 
         <h1 class="mb-5 text-center" style="color:#d4cfff;">Meet all of our artists!</h1>
@@ -141,6 +154,7 @@
                             </h5>
                             <p class="card-text">Genre: {{ artist.genre }}</p>
 
+                            {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('edit_artist', {'id': artist.id}) }}" class="btn btn-outline-light" style="border-radius: 25px" >
                                 Edit Artist
                             </a>
@@ -153,6 +167,8 @@
                                     data-bs-target="#deleteModal{{ artist.id }}">
                                 Delete
                             </button>
+
+                            {% endif %}
 
                         </div>
                     </div>

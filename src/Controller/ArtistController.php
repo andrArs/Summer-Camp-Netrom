@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class ArtistController extends AbstractController
 {
@@ -26,7 +27,8 @@ final class ArtistController extends AbstractController
 //            'artists' =>$artists
 //        ]);
 //}
-    #[Route('/artist', name: 'all_artists', methods: ['GET'])]
+    #[Route('/public/artist', name: 'all_artists', methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function getAllArtists(Request $request, PaginatorInterface $paginator): Response
     {
         $searchTerm = $request->query->get('search', '');
@@ -50,7 +52,8 @@ final class ArtistController extends AbstractController
         ]);
     }
 
-    #[Route('/artist/show/{id}', name: 'one_artist',methods: ['GET'])]
+    #[Route('/public/artist/show/{id}', name: 'one_artist',methods: ['GET'])]
+    #[IsGranted('PUBLIC_ACCESS')]
     public function getOneArtist(int $id): Response
     {
         $artist = $this->artistRepository->find($id);
@@ -64,7 +67,8 @@ final class ArtistController extends AbstractController
         ]);
     }
 
-    #[Route('/artist/delete/{id}', name: 'delete_artist', methods: ['POST'])]
+    #[Route('/admin/artist/delete/{id}', name: 'delete_artist', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function deleteArtist(int $id): Response
     {
         $artist = $this->artistRepository->find($id);
@@ -80,8 +84,9 @@ final class ArtistController extends AbstractController
     }
 
 
-#[Route('/artist/new', name: 'new_artist', methods: ['GET', 'POST'])]
-public function newArtist(Request $request): Response
+    #[Route('/admin/artist/new', name: 'new_artist', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function newArtist(Request $request): Response
 {
     $artist=new Artist();
     $form = $this->createForm(ArtistType::class, $artist);
@@ -105,9 +110,10 @@ public function newArtist(Request $request): Response
 
 }
 
-#[Route('/artist/{id}/edit', name: 'edit_artist', methods: ['GET', 'POST'])]
-public function editArtist(Request $request, int $id): Response
-{
+    #[Route('/admin/artist/{id}/edit', name: 'edit_artist', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function editArtist(Request $request, int $id): Response
+    {
     $artist = $this->artistRepository->find($id);
     if($artist === null){
         return $this->json(['error' => 'Artist not found'], Response::HTTP_NOT_FOUND);
