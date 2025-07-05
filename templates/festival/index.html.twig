@@ -74,15 +74,9 @@
         }
 
         .pagination a:hover {
-            background-color: #7b2ff7;
+            /*background-color: #7b2ff7;*/
             color: white;
             box-shadow: 0 0 8px #7b2ff7;
-        }
-
-        .pagination .active {
-            background-color: #9a4ef1;
-            color: white;
-            box-shadow: 0 0 10px #9a4ef1;
         }
 
 
@@ -95,17 +89,24 @@
     </style>
 
     <div class="container mt-4">
-        <a href="{{ path('app_homepage') }}"
-           class="btn btn-outline-light"
-           style="border-radius: 25px">
-            Back to Homepage
-        </a>
-        <a href="{{ path('new_festival') }}"
-           class="btn btn-outline-light"
-           style="border-radius: 25px"
-        >
-            Create Festival
-        </a>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ path('app_homepage') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px"
+            >
+                Homepage
+            </a>
+            <a href="{{ path('new_festival') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                New Festival
+            </a>
+            <a href="{{ path('app_logout') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Logout
+            </a>
+        </div>
     <h1 class="mb-5 text-center"
         style="color:#d4cfff;">Festivals</h1>
 
@@ -173,7 +174,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" style="border-radius: 25px" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </div>
                         </form>

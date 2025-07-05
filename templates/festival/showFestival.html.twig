@@ -7,117 +7,91 @@
         body {
             background-color: #2e1a47;
             font-family: 'Poppins', sans-serif;
-            color: #ddd;
-            margin: 0;
-            padding: 4rem 2rem;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .festival-card {
-            background-color: #3b2a6d;
-            color: #e0d9ff;
-            border-radius: 12px;
-            border: none;
-            box-shadow: 0 8px 20px rgba(59, 42, 109, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: center;
-            max-width: 600px;
-            width: 100%;
-            padding: 2rem;
-            position: relative;
         }
-        .festival-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(154, 78, 241, 0.8);
-        }
-
-        .festival-image {
-            width: 100%;
-            height: 250px;
+        .example-wrapper {
+            margin: 2em auto;
+            max-width: 700px;
+            background-color: white;
             border-radius: 15px;
-            object-fit: cover;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 15px rgba(123, 47, 247, 0.6);
-            border: 3px solid #a57eff;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(111, 66, 193, 0.3);
         }
-
-        h1 {
-            font-weight: 700;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-        }
-
-        h2 {
-            font-weight: 500;
-            font-size: 1.4rem;
-            margin: 0.3rem 0;
-            color: #d6bcff;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
-        }
-
         .btn-container {
-            margin-top: 2rem;
             display: flex;
             justify-content: center;
             gap: 1rem;
             flex-wrap: wrap;
-        }
-
-        .btn-danger, .btn-outline-secondary {
-            padding: 0.7rem 1.6rem;
-            font-weight: 600;
-            border-radius: 50px;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 120px;
-            user-select: none;
+            margin-top: 1.5rem;
         }
 
         .btn-danger {
-            background-color: #a05fff;
-            border-color: #a05fff;
-            color: white;
-            box-shadow: 0 4px 12px rgba(160, 95, 255, 0.7);
+            border-radius: 20px;
+            /*padding:  1.5rem;*/
+            background-color: #6f42c1;
+            border-color: #6f42c1;
         }
 
         .btn-danger:hover {
-            background-color: #7b2ff7;
-            border-color: #7b2ff7;
-            box-shadow: 0 6px 20px #7b2ff7;
-            color: white;
+            background-color: #9a4ef1;
+            border-color: #9a4ef1;
         }
 
-        .btn-outline-secondary {
-            background: transparent;
-            border-color: #d6bcff;
-            color: #d6bcff;
-            box-shadow: 0 0 8px rgba(214, 188, 255, 0.5);
+        .modal-content {
+            border: 2px solid #6f42c1;
+            border-radius: 12px;
         }
 
-        .btn-outline-secondary:hover {
-            background-color: #d6bcff;
-            color: #4c1d95;
-            box-shadow: 0 0 12px #d6bcff;
+        .modal-header {
+            background-color: #f3e6f5;
         }
 
+        .btn-back {
+            display: inline-block;
+            margin: 20px auto 0;
+            color: #6f42c1;
+            border: 1px solid #6f42c1;
+            padding: 4px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
 
+        }
+
+        .btn-back:hover {
+            background-color: #f3e6f5;
+        }
+
+        .festival-image {
+            width: 70%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgb(67, 22, 106);
+            border: 3px solid #43166a;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
     </style>
 
-    <div class="festival-card">
+
+    <div class="example-wrapper">
+        <div class="text-start mb-3">
+            <a href="{{ path('all_festivals') }}" class="btn-back">Back to list</a>
+        </div>
+        <h1 style="color: #2e1a47; align-content: center; " >Welcome to {{ festival.name }}!</h1>
+
         <img
 {#            it s the same image for all festivals for now, i need to make some changes in database for adding an imgUrl field:(#}
             src="https://craiovaintencity.ro/wp-content/uploads/2025/02/image00002-890x664.jpeg"
             alt="Festival Image"
             class="festival-image">
 
-        <h1>Welcome to {{ festival.name }}!</h1>
-        <h2>Location: {{ festival.location }}</h2>
-        <h2>Date: {{ festival.startDate|date('Y-m-d') }} : {{ festival.endDate|date('Y-m-d') }}</h2>
+        <h3 style="color: #2e1a47; align-content: center; ">Location: {{ festival.location }}</h3>
+        <h3  style="color: #2e1a47; align-content: center; ">Date: {{ festival.startDate|date('Y-m-d') }} : {{ festival.endDate|date('Y-m-d') }}</h3>
 
         <div class="btn-container">
             <button type="button"
@@ -127,7 +101,7 @@
                 Delete
             </button>
 
-            <a href="{{ path('all_festivals') }}" class="btn-outline-secondary">Back to list</a>
+
         </div>
 
 {#       modal#}
@@ -159,7 +133,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary"  style="border-radius: 20px;" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </div>
                     </form>
