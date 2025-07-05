@@ -74,15 +74,9 @@
         }
 
         .pagination a:hover {
-            background-color: #7b2ff7;
+            /*background-color: #7b2ff7;*/
             color: white;
             box-shadow: 0 0 8px #7b2ff7;
-        }
-
-        .pagination .active {
-            background-color: #9a4ef1;
-            color: white;
-            box-shadow: 0 0 10px #9a4ef1;
         }
 
 
@@ -92,19 +86,28 @@
             font-size: 0.9rem;
         }
 
+
+
     </style>
 
     <div class="container mt-4">
 
         <div class="d-flex justify-content-end mb-3">
             <a href="{{ path('app_homepage') }}"
-               class="btn btn-outline-light"
+               class="btn btn-outline-light me-3"
                style="border-radius: 25px"
             >
-                Back to Homepage
+                Homepage
             </a>
-            <a href="{{ path('new_artist') }}" class="btn btn-outline-light" style="border-radius: 25px" >
+            <a href="{{ path('new_artist') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
                 New Artist
+            </a>
+            <a href="{{ path('app_logout') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Logout
             </a>
         </div>
 
@@ -132,7 +135,7 @@
                         <div class="card-body d-flex flex-column justify-content-center">
 
                             <h5 class="card-title">
-                                <a href="{{ path('one_artist', {'id': artist.id}) }}">
+                                <a href="{{ path('one_artist', {'id': artist.id}) }}" style="color: #7b2ff7;">
                                     {{ artist.name }}
                                 </a>
                             </h5>
@@ -176,7 +179,7 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-secondary"  style="border-radius: 25px" data-bs-dismiss="modal">Cancel</button>
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </div>
                                 </form>
