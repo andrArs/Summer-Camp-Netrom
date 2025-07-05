@@ -107,7 +107,8 @@
         </div>
     {% endif %}
 
-    <div class="h2 text-center">Please sign in</div>
+    <div class="h2 text-center">Show Time</div>
+{#    <div style="text-align: center; margin-top: 20px; color: #43166a;"> Log In </div>#}
     <label for="inputEmail" class="form-group">Email</label>
     <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label for="inputPassword" class="form-group">Password</label>
@@ -120,12 +121,17 @@
         </label>
     </div>
 
-    <button class="btn-back2" type="submit" style="margin-right: 35px;">
-        Sign in
+    <button class="btn-back2" type="submit" style="align-content: center">
+        Log in
     </button>
-    <a href="{{ path('app_register') }}" class="btn-back" >
-        Sign Up
-    </a>
+
+    <div style="text-align: center; margin-top: 20px; color: #43166a;">
+        Don't have an account?
+        <div> <a href="{{ path('app_register') }}"   style="color: #6D28D9">Sign up</a></div>
+
+{#    <a href="{{ path('app_register') }}" class="btn-back" >#}
+{#        Sign Up#}
+{#    </a>#}
 </form>
 </div>
 {% endblock %}
