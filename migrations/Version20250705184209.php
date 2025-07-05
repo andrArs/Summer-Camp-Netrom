@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250703190404 extends AbstractMigration
+final class Version20250705184209 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,6 +21,9 @@ final class Version20250703190404 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
+            ALTER TABLE artist ADD image VARCHAR(255) DEFAULT NULL
+        SQL);
+        $this->addSql(<<<'SQL'
             ALTER TABLE messenger_messages CHANGE delivered_at delivered_at DATETIME DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)'
         SQL);
     }
@@ -28,6 +31,9 @@ final class Version20250703190404 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql(<<<'SQL'
+            ALTER TABLE artist DROP image
+        SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE messenger_messages CHANGE delivered_at delivered_at DATETIME DEFAULT 'NULL' COMMENT '(DC2Type:datetime_immutable)'
         SQL);

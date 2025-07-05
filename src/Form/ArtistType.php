@@ -24,6 +24,13 @@ class ArtistType extends AbstractType{
                     'placeholder' => 'e.g. Pop'
                 ]
             ])
+            ->add('image', TextType::class, [
+                'label' => 'Image',
+                'attr' => [
+                    'class' => 'custom-input',
+                    'placeholder' => 'e.g. https://assets.mycast.io/actor_images/actor-smiley-371577_large.jpg?1645509719'
+                ]
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Save',
                 'attr' => [
