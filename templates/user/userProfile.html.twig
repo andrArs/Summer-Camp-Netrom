@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HelloController!{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #2e1a47;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        .example-wrapper {
+            margin: 2em auto;
+            max-width: 700px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 0 15px rgba(111, 66, 193, 0.3);
+        }
+        .card {
+            background-color: #3b2a6d;
+            color: #e0d9ff;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 8px 20px rgba(59, 42, 109, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(154, 78, 241, 0.8);
+        }
+
+        .card-text {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: #bfb7ff;
+        }
+    </style>
+
+    <div class="container mt-4">
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ path('app_homepage') }}"
+           class="btn btn-outline-light me-3"
+           style="border-radius: 25px"
+        >
+            Homepage
+        </a>
+        {% if is_granted('ROLE_USER') %}
+            <a href="{{ path('buy_ticket_by_user_id') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Buy Ticket
+            </a>
+        {% endif %}
+
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a href="{{ path('app_logout') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Log out
+            </a>
+        {% else %}
+            <a href="{{ path('app_login') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Log in
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="example-wrapper">
+        <h1
+            style="color: #43166a;
+             font-family: 'Poppins', sans-serif;
+             font-size: 2rem;
+              margin-bottom: 1.5rem;">
+            Your profile
+        </h1>
+        <ul
+            style="list-style: none;
+            padding: 0;
+             text-align: left;
+              color: #4f0e88;
+              font-family: 'Poppins', sans-serif;
+              font-size: 1.5rem;">
+            <li style="margin-bottom: 0.5rem;"><strong style="color: #7b2ee8;">
+                    Name:
+                </strong>
+                {% if user.details is not null and user.details.name is not null %}
+                    {{ user.details.name }}
+                {% else %}
+                    Unknown name
+                {% endif %}</li>
+            <li style="margin-bottom: 0.5rem;"><strong style="color: #7b2ee8;">
+                    Age:</strong>
+                {% if user.details is not null and user.details.age is not null %}
+                    {{ user.details.age }}
+                {% else %}
+                    Unknown age
+                {% endif %}
+            </li>
+            <li style="margin-bottom: 0.5rem;"><strong style="color: #7b2ee8;">Email:</strong> {{ user.email }}</li> </ul>
+
+        <div>
+            <h4 style="color: #7b2ee8; text-align: left; font-weight:550">Your Tickets: </h4>
+            {% if user.purchases is not null  %}
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    {% for purchase in user.purchases %}
+                        <div class="col">
+                            <div class="card h-100 card-mov">
+                                <div class="card-body d-flex flex-column justify-content-center">
+                                    <p class="card-text">
+                                        Ticket:
+                                        <a
+                                            style="color:#bfb7ff"
+                                            href="{{ path('show_ticket', {'id':purchase.ticket.id}) }}" >
+                                            {{ purchase.ticket.type }}
+                                        </a></p>
+                                    <p class="card-text">
+                                        Festival:
+                                        <a style="color:#bfb7ff"
+                                           href="{{ path('show_festival', {'id':purchase.festival.id}) }}">
+                                            {{ purchase.festival.name }}
+                                        </a></p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No purchases found.</p>
+            {% endif %}
+        </div>
+
+
+</div>>
+
+
+    </div>
+{% endblock %}

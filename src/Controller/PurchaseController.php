@@ -112,30 +112,6 @@ final class PurchaseController extends AbstractController
 
     }
 
-//    #[Route('/user/purchase', name: 'all_purchases_per_user', methods: ['GET'])]
-//    #[IsGranted('ROLE_USER')]
-//    public function getAllUserPurchases(Request $request, PaginatorInterface $paginator): Response
-//    {
-//        $purchases = $this->purchaseRepository;
-//        $allUserPurchases=[];
-//        foreach($purchases as $purchase){
-//            if($purchase->getUser() == $this->getUser()){
-//                $allPurchases=$purchase;
-//            }
-//            }
-//
-//
-//        $query = $allPurchases->createQueryBuilder('p');
-//        $pagination = $paginator->paginate(
-//            $queryBuilder,
-//            $request->query->getInt('page', 1),
-//            6
-//        );
-//
-//        return $this->render('purchase/index.html.twig', [
-//            'pagination' => $pagination
-//        ]);
-//    }
 }
 
 

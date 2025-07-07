@@ -137,6 +137,18 @@ final class UserController extends AbstractController
      ]);
     }
 
+    #[Route('/user/app/user/profile', name: 'user_profile', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
+    public function userProfile(): Response
+    {
+        $user = $this->getUser();
+        return $this->render('user/userProfile.html.twig', [
+            'user' => $user
+        ]);
+
+
+    }
+
 
 
 }
