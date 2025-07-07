@@ -54,8 +54,15 @@
                 </a>
             {% endif %}
 
-            {% if is_granted('ROLE_USER') %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <a href="{{ path('user_profile') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Your Profile
+                </a>
+
+            {% else %}
+                <a href="{{ path('app_login') }}"
                    class="btn btn-outline-light me-3"
                    style="border-radius: 25px" >
                     Your Profile
