@@ -123,4 +123,20 @@ final class UserController extends AbstractController
             'user'=>$user,
         ]);
     }
+
+    #[Route('/user/app/user/purchases', name: 'user_purchases', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
+    public function userPurchases(): Response
+    {
+     $user = $this->getUser();
+     $purchases = $user->getPurchases();
+
+        return $this->render('user/userPurchases.html.twig', [
+         'purchases' => $purchases
+
+     ]);
+    }
+
+
+
 }

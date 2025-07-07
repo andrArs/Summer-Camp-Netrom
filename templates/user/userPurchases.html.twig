@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} List{% endblock %}
+
+{% block body %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            background-color: #2e1a47;
+            font-family: 'Poppins', sans-serif;
+            color: #ddd;
+        }
+
+        .card {
+            background-color: #3b2a6d;
+            color: #e0d9ff;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 8px 20px rgba(59, 42, 109, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(154, 78, 241, 0.8);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+            color: #d4cfff;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: #bfb7ff;
+        }
+
+        .btn-danger {
+            background-color: #7b2ff7;
+            border-color: #7b2ff7;
+            font-weight: 600;
+            border-radius: 30px;
+            padding: 0.4rem 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-danger:hover, .btn-danger:focus {
+            background-color: #9a4ef1;
+            border-color: #9a4ef1;
+            box-shadow: 0 0 8px #9a4ef1;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            font-weight: 600;
+        }
+
+        .pagination a,
+        .pagination span {
+            background-color: #3b2a6d;
+            color: #d4cfff;
+            border-radius: 8px;
+            padding: 0.4rem 0.9rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            /*background-color: #7b2ff7;*/
+            color: white;
+            box-shadow: 0 0 8px #7b2ff7;
+        }
+
+        .pagination .active {
+            background-color: #9a4ef1;
+            color: white;
+            box-shadow: 0 0 10px #9a4ef1;
+        }
+
+
+        .btn-sm.w-100 {
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+    </style>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ path('app_homepage') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px"
+            >
+                Homepage
+            </a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('new_user') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    New User
+                </a>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('user_purchases') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Your Tickets
+                </a>
+            {% endif %}
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('app_logout') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log out
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log in
+                </a>
+            {% endif %}
+
+        </div>
+
+        <h1 class="mb-5 text-center"
+            style="color:#d4cfff;">Your tickets</h1>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            {% for purchase in purchases %}
+
+                <div class="col">
+                    <div class="card h-100 card-mov">
+                        <div class="card-body d-flex flex-column justify-content-center">
+                            <p class="card-text"> Festival: {{ purchase.festival.name }} </p>
+                            <p class ="card-text" > Date: {{ purchase.festival.startDate|date('Y-m-d') }} : {{ purchase.festival.endDate|date('Y-m-d') }}</p>
+                            <p class="card-text"> Ticket Type: {{ purchase.ticket.type }} </p>
+                            <p class="card-text"> Price: {{ purchase.ticket.price }} lei</p>
+
+                        </div></div></div>
+
+            {% else %}
+                <p>Nothing found.</p>
+            {% endfor %}
+
+        </div>
+
+
+    </div>
+{% endblock %}

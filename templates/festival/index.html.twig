@@ -139,6 +139,14 @@
                     <p class="card-text">{{ festival.location }}</p>
 
 
+{#                    <a href="{{ path('buy_ticket_by_user_id', {'id': festival.purchases.getUser()}) }}"#}
+{#                       class="btn btn-outline-light"#}
+{#                       style="border-radius: 25px"#}
+{#                    >#}
+{#                        Buy#}
+{#                    </a>#}
+
+
                     {% if is_granted('ROLE_ADMIN') %}
 
                     <a href="{{ path('edit_festival', {'id': festival.id}) }}"

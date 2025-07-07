@@ -58,10 +58,11 @@
         <a href="{{ path('all_lineup') }}" class="btn-home"> Lineup</a>
 
         {% if is_granted('ROLE_USER') %}
-        <a href="{{ path('all_purchases') }}" class="btn-home"> Purchases</a>
+        <a href="{{ path('buy_ticket_by_user_id') }}" class="btn-home"> Buy Ticket</a>
         {% endif %}
 
         {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('all_purchases') }}" class="btn-home"> Purchases</a>
         <a href="{{ path('all_users') }}" class="btn-home"> Users</a>
        {% endif %}
 
