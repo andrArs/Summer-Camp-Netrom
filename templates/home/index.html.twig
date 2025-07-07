@@ -50,16 +50,26 @@
 
     <div class="homepage-container">
         <h1>Welcome to ShowTime app!</h1>
+        <div style="margin-top:50px ">
         <a href="{{ path('all_festivals') }}" class="btn-home">Festivals</a>
         <a href="{{ path('all_artists') }}" class="btn-home"> Artists</a>
         <a href="{{ path('all_stages') }}" class="btn-home"> Stages</a>
         <a href="{{ path('all_schedules') }}" class="btn-home"> Schedules</a>
         <a href="{{ path('all_tickets') }}" class="btn-home"> Tickets</a>
         <a href="{{ path('all_lineup') }}" class="btn-home"> Lineup</a>
+        </div>
 
         {% if is_granted('ROLE_USER') %}
-        <a href="{{ path('buy_ticket_by_user_id') }}" class="btn-home"> Buy Ticket</a>
+            <div style="margin-top: 50px;">
+        <a href="{{ path('buy_ticket_by_user_id') }}"
+           class="btn btn-outline-light me-3"
+           style="border-radius: 25px"> Buy Ticket</a>
+            <a href="{{ path('user_purchases') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px"> Your Tickets</a>
+
         {% endif %}
+            </div>
 
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('all_purchases') }}" class="btn-home"> Purchases</a>

@@ -112,6 +112,14 @@
                     </a>
                 {% endif %}
 
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('user_purchases') }}"
+                       class="btn btn-outline-light me-3"
+                       style="border-radius: 25px" >
+                        Your Tickets
+                    </a>
+                {% endif %}
+
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <a href="{{ path('app_logout') }}"
                        class="btn btn-outline-light me-3"
