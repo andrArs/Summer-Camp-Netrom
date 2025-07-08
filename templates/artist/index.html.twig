@@ -108,6 +108,35 @@
             </a>
             {% endif %}
 
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and not is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('buy_ticket_by_user_id') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Buy Ticket
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Buy Ticket
+                </a>
+            {% endif %}
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and not is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('user_profile') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Your Profile
+                </a>
+
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Your Profile
+                </a>
+            {% endif %}
+
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <a href="{{ path('app_logout') }}"
                class="btn btn-outline-light me-3"
