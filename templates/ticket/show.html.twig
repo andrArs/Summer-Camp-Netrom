@@ -53,10 +53,26 @@
             box-shadow: 0 4px 15px rgba(123, 47, 247, 0.6);
             border: 3px solid #a57eff;
         }
+        .btn-back {
+            display: inline-block;
+            margin: 20px auto 0;
+            color: #6f42c1;
+            border: 1px solid #6f42c1;
+            padding: 4px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: #f3e6f5;
+        }
+
 
     </style>
 
     <div class="example-wrapper">
+
         <h1>Details about {{ ticket.type }}!</h1>
 
         <h3>Price: <strong>{{ ticket.price}} lei </strong></h3>
@@ -71,6 +87,7 @@
             alt="Festival Image"
             class="image">
 
+        <a href="{{ path('all_tickets') }}" class="btn-back">Back to list</a>
 
         {% if is_granted('ROLE_ADMIN') %}
 
@@ -89,7 +106,6 @@
             </button>
             {% endif %}
 
-            <a href="{{ path('all_tickets') }}" class="btn btn-outline-secondary">Back to list</a>
         </div>
 
         {#            modal#}

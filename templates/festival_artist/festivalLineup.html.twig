@@ -113,6 +113,12 @@
             {{ FestivalLineUp[0].festival.name }} Lineup
         </h1>
 
+        <a href="{{ path('show_festival', {'id': FestivalLineUp[0].festival.id}) }}"
+           class="btn btn-outline-light me-3"
+           style="border-radius: 25px;
+                    margin-bottom: 25px;" >
+           Back to list
+        </a>
         <div class="row row-cols-1 row-cols-md-3 g-4">
 
             {% for fa in FestivalLineUp %}

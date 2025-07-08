@@ -51,12 +51,29 @@
             object-fit: cover;
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 15px rgba(123, 47, 247, 0.6);
-            border: 3px solid #a57eff;
+            border: 3px solid #43166a;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin: 20px auto 0;
+            color: #6f42c1;
+            border: 1px solid #6f42c1;
+            padding: 4px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+
+        }
+
+        .btn-back:hover {
+            background-color: #f3e6f5;
         }
 
     </style>
 
     <div class="example-wrapper">
+
         <h1>Details about {{ stage.name }}!</h1>
 
         <h3>Genre: <strong>{{ stage.genre}}</strong></h3>
@@ -70,6 +87,8 @@
             src="https://solotech.com/wp-content/uploads/2024/08/Veld-Night-1-7.jpg"
             alt="Festival Image"
             class="image">
+
+        <a href="{{ path('all_stages') }}" class="btn-back">Back to list</a>
 
 
         {% if is_granted('ROLE_ADMIN') %}
@@ -88,7 +107,7 @@
 
             {% endif %}
 
-            <a href="{{ path('all_stages') }}" class="btn btn-outline-secondary">Back to list</a>
+
         </div>
 
         {#            modal#}
