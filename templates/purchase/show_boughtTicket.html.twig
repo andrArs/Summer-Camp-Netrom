@@ -78,22 +78,88 @@
 
     </style>
 
+<div class="container mt-4">
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ path('app_homepage') }}"
+           class="btn btn-outline-light me-3"
+           style="border-radius: 25px"
+        >
+            Homepage
+        </a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('new_user') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                New User
+            </a>
+        {% endif %}
+
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a href="{{ path('user_profile') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Your Profile
+            </a>
+
+        {% else %}
+            <a href="{{ path('app_login') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Your Profile
+            </a>
+        {% endif %}
+
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a href="{{ path('app_logout') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Log out
+            </a>
+        {% else %}
+            <a href="{{ path('app_login') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px" >
+                Log in
+            </a>
+        {% endif %}
+
+    </div>
+
     <div class="wrapper bg-white">
-        <div style="text-align: left;">
-            <a href="{{ path('app_homepage') }}" class="btn-back">← Back to list</a>
-        </div>
         <div class="h2 text-center">Buy Ticket</div>
+
+        <div
+            style="
+            margin-bottom: 1.5rem;
+             font-weight: 600;
+              color: #43166a;">
+
+            Info about:
+            <a href="{{ path('all_festivals') }}"
+               class="btn btn-outline-secondary ms-3"
+               style="border-radius: 25px; color: #43166a;
+                font-weight: 600;">
+                Festivals
+            </a>
+            <a href="{{ path('all_tickets') }}"
+               class="btn btn-outline-secondary ms-2"
+               style="border-radius: 25px; color: #43166a;
+                font-weight: 600;">
+                Tickets
+            </a>
+        </div>
+
 
         {{ form_start(form) }}
         <div class="form-group">
             {{ form_label(form.festival) }}
-            {{ form_widget(form.festival, {'attr': {'style': 'border-radius: 8px; border: 2px solid #5d4587;padding: 8px 10px;' }}) }}
+            {{ form_widget(form.festival, {'attr': {'style': 'border-radius: 8px; border: 2px solid #5d4587;padding: 8px 10px;width: 100%;' }}) }}
             {{ form_errors(form.festival) }}
         </div>
 
         <div class="form-group">
             {{ form_label(form.ticket) }}
-            {{ form_widget(form.ticket, {'attr': {'style': 'border-radius: 8px; border: 2px solid #5d4587;padding: 8px 10px;' }})}}
+            {{ form_widget(form.ticket, {'attr': {'style': 'border-radius: 8px; border: 2px solid #5d4587;padding: 8px 10px;width: 100%;' }})}}
             {{ form_errors(form.ticket) }}
         </div>
 
@@ -103,5 +169,6 @@
 
         {{ form_end(form) }}
     </div>
+</div>
 
 {% endblock %}
