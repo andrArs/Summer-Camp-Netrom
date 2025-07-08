@@ -81,7 +81,7 @@
         <div class="text-start mb-3">
             <a href="{{ path('all_artists') }}" class="btn-back">Back to list</a>
         </div>
-        <h1 style="color: #2e1a47; align-content: center; " >Meet all of our artists!</h1>
+        <h2 style="color: #4f0e88; align-content: center;" >{{ artist.name }}</h2>
         {% if artist.image %}
             <img
                 src="{{ asset(artist.image) }}"
@@ -94,8 +94,14 @@
                 class="artist-image">
         {% endif %}
 
-        <h3 style="color: #4f0e88; align-content: center;" > {{ artist.name }}</h3>
             <h4  style="color: #2e1a47; align-content: center;"> Genre: {{ artist.genre }}</h4>
+
+        <a href="{{ path('show_artist_schedule', {'id': artist.id}) }}"
+           class="btn-back"
+           style="border-radius: 25px"
+        >
+            See Schedule
+        </a>
 
         {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('edit_artist', {'id': artist.id}) }}" class="btn-back" style="border-radius: 25px" >

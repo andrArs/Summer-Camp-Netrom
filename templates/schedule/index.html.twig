@@ -176,11 +176,6 @@
                             <p class="card-text">Date: {{ schedule.getDate()|date('Y-m-d') }}</p>
                             <p class="card-text"> {{ schedule.getStartTime()|date('H:i') }} - {{ schedule.getEndTime()|date('H:i') }}</p>
 
-                            <h5 class="card-title">
-                                <a href="{{ path('show_schedule', {'id': schedule.id}) }}">
-                                    See details
-                                </a>
-                            </h5>
 
                             {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('edit_schedule', {'id': schedule.id}) }}" class="btn btn-outline-light" >

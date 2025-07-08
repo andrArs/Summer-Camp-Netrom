@@ -53,10 +53,17 @@ final class FestivalArtistController extends AbstractController
         ]);
     }
 
-    #[Route('/public/festivalArtist/artist/{id}', name: 'show_festival_artist', methods: ['GET'])]
+    #[Route('/public/festivalArtist/artist/{id}', name: 'show_artist_schedule', methods: ['GET'])]
     #[IsGranted('PUBLIC_ACCESS')]
     public function showArtistSchedule(int $id):Response{
-        $artist=$this->festivalArtistRepository->findBy(['artist_id'=>$id]);
+        $artist=$this->festivalArtistRepository->findBy(['artist'=>$id]);
+        if(!$artist) {
+            return $this->render('error/error.html.twig', [
+                'message' => 'Schedule not found',
+                'go_back_to'=>'all_artists',
+                'name'=>'artists'
+            ]);
+        }
         return $this->render('festival_artist/artistSchedule.html.twig', [
             'artistSchedule' => $artist
         ]);
