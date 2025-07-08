@@ -105,7 +105,8 @@
             </a>
             {% endif %}
 
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and not is_granted('ROLE_ADMIN') %}
+            {% if not is_granted('ROLE_ADMIN') %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED')  %}
                 <a href="{{ path('buy_ticket_by_user_id') }}"
                    class="btn btn-outline-light me-3"
                    style="border-radius: 25px" >
@@ -117,9 +118,11 @@
                    style="border-radius: 25px" >
                     Buy Ticket
                 </a>
+                {% endif %}
             {% endif %}
 
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and not is_granted('ROLE_ADMIN') %}
+            {% if not is_granted('ROLE_ADMIN') %}
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <a href="{{ path('user_profile') }}"
                    class="btn btn-outline-light me-3"
                    style="border-radius: 25px" >
@@ -132,6 +135,7 @@
                    style="border-radius: 25px" >
                     Your Profile
                 </a>
+            {% endif %}
             {% endif %}
 
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
