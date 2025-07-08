@@ -94,6 +94,13 @@
         <h3  style="color: #2e1a47; align-content: center; ">Date: {{ festival.startDate|date('Y-m-d') }} : {{ festival.endDate|date('Y-m-d') }}</h3>
 
 
+        <a href="{{ path('show_festival_lineup', {'id': festival.id}) }}"
+           class="btn-back"
+           style="border-radius: 25px"
+        >
+            See lineup
+        </a>
+
         {% if is_granted('ROLE_ADMIN') %}
 
             <a href="{{ path('edit_festival', {'id': festival.id}) }}"

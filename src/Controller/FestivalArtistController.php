@@ -40,6 +40,14 @@ final class FestivalArtistController extends AbstractController
     public function festivalLineup(int $id):Response{
 
         $festival = $this->festivalArtistRepository->findBy(['festival'=>$id]);
+        if (!$festival) {
+//            throw $this->createNotFoundException('Lineup not found.');
+            return $this->render('error/error.html.twig', [
+                'message' => 'Lineup not found',
+                'go_back_to'=>'all_festivals',
+                'name'=>'festivals'
+            ]);
+        }
         return $this->render('festival_artist/festivalLineup.html.twig', [
             'FestivalLineUp' => $festival
         ]);

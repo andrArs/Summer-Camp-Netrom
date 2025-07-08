@@ -1,25 +1,145 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FestivalArtistController!{% endblock %}
+{% block title %} List{% endblock %}
 
 {% block body %}
     <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            background-color: #2e1a47;
+            font-family: 'Poppins', sans-serif;
+            color: #ddd;
+        }
+
+        .card {
+            background-color: #3b2a6d;
+            color: #e0d9ff;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 8px 20px rgba(59, 42, 109, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(154, 78, 241, 0.8);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+            color: #d4cfff;
+        }
+
+        .card-text {
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            color: #bfb7ff;
+        }
+
+
     </style>
 
-    <div class="example-wrapper">
-        <h2>LineUp </h2>
-        <h3>
-            {% for festival in FestivalLineUp %}
-                <h5>
-                    {{ festival.getName() }}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ path('app_homepage') }}"
+               class="btn btn-outline-light me-3"
+               style="border-radius: 25px"
+            >
+                Homepage
+            </a>
 
-                </h5>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('new_lineup') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Create New Lineup
+                </a>
+            {% endif %}
+
+            {% if not is_granted('ROLE_ADMIN') %}
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED')  %}
+                    <a href="{{ path('buy_ticket_by_user_id') }}"
+                       class="btn btn-outline-light me-3"
+                       style="border-radius: 25px" >
+                        Buy Ticket
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_login') }}"
+                       class="btn btn-outline-light me-3"
+                       style="border-radius: 25px" >
+                        Buy Ticket
+                    </a>
+                {% endif %}
+            {% endif %}
+
+            {% if not is_granted('ROLE_ADMIN') %}
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ path('user_profile') }}"
+                       class="btn btn-outline-light me-3"
+                       style="border-radius: 25px" >
+                        Your Profile
+                    </a>
+
+                {% else %}
+                    <a href="{{ path('app_login') }}"
+                       class="btn btn-outline-light me-3"
+                       style="border-radius: 25px" >
+                        Your Profile
+                    </a>
+                {% endif %}
+            {% endif %}
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('app_logout') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log out
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light me-3"
+                   style="border-radius: 25px" >
+                    Log in
+                </a>
+            {% endif %}
+
+        </div>
+        <h1 class="mb-5 text-center"
+            style="color:#d4cfff;">
+            {{ FestivalLineUp[0].festival.name }} Lineup
+        </h1>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            {% for fa in FestivalLineUp %}
+                <div class="col">
+                    <div class="card h-100 card-mov">
+                        <div class="card-body d-flex flex-column justify-content-center">
+
+                            <p class="card-text">
+                                <a href="{{ path('one_artist', {'id': fa.artist.id}) }}">
+                                    {{ fa.artist.name|default('Unknown Artist') }}</a>
+                            </p>
+
+                            <p class="card-text">
+                                Day {{ fa.schedule.day|default('N/A') }},
+                                {{ fa.schedule.date ? fa.schedule.date|date('Y-m-d') : 'No date' }}
+                            </p>
+
+                            <h5 class="card-title">
+                                {{ fa.schedule.startTime ? fa.schedule.startTime|date('H:i') : 'N/A' }}
+                                –
+                                {{ fa.schedule.endTime ? fa.schedule.endTime|date('H:i') : 'N/A' }}
+                            </h5>
+
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
-        </h3>
-
-
-
+        </div>
     </div>
 {% endblock %}
