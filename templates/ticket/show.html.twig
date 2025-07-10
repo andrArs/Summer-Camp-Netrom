@@ -123,6 +123,13 @@
                 </a></div>
         {% endif %}
 
+        {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')  %}
+            <div >
+                <a href="{{ path('app_login') }}" class="btn-home">
+                    <i class="fas fa-ticket-alt"></i> Buy Tickets
+                </a></div>
+        {% endif %}
+
         <a href="{{ path('all_tickets') }}" class="btn-back">Back to list</a>
 
         {% if is_granted('ROLE_ADMIN') %}

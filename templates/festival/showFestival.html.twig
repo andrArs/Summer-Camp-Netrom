@@ -181,6 +181,13 @@
                 </a></div>
         {% endif %}
 
+        {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') and (status == 'upcoming' or status == 'ongoing') %}
+        <div >
+            <a href="{{ path('app_login') }}" class="btn-home">
+                <i class="fas fa-ticket-alt"></i> Buy Tickets
+            </a></div>
+        {% endif %}
+
         {% if is_granted('ROLE_ADMIN') %}
 <div>
             <a href="{{ path('edit_festival', {'id': festival.id}) }}"
