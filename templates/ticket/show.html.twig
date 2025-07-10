@@ -68,6 +68,30 @@
             background-color: #f3e6f5;
         }
 
+        .btn-home {
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        .btn-home:hover {
+            background: linear-gradient(135deg, #f97316, #f59e0b);
+            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.6);
+            transform: translateY(-3px);
+        }
+
 
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -91,6 +115,13 @@
             src="https://img.freepik.com/free-psd/music-festival-celebration-template_23-2151507793.jpg?semt=ais_hybrid&w=740"
             alt="Festival Image"
             class="image">
+
+        {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN')  %}
+            <div >
+                <a href="{{ path('buy_ticket_by_id',{'id': ticket.id}) }}" class="btn-home">
+                    <i class="fas fa-ticket-alt"></i> Buy Tickets
+                </a></div>
+        {% endif %}
 
         <a href="{{ path('all_tickets') }}" class="btn-back">Back to list</a>
 

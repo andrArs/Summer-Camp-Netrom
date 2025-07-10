@@ -110,6 +110,20 @@
                                            href="{{ path('show_festival', {'id':purchase.festival.id}) }}">
                                             {{ purchase.festival.name }}
                                         </a></p>
+
+                                    {% set now = "now"|date("Y-m-d") %}
+                                    {% set endDate = purchase.festival.EndDate|date("Y-m-d") %}
+                                    {% set startDate = purchase.festival.getStartDate()|date("Y-m-d") %}
+                                    {% set daysLeft = (date(endDate).diff(date(now)).days) %}
+
+                                    {% if endDate >= now %}
+                                        <p class="card-text">
+                                            <span style="color: green;"><strong>Available</strong></span></p>
+                                    {% else %}
+                                        <p class="card-text">
+                                            <span style="color: #d63939;"><strong>No longer available</strong></span>
+                                        </p>
+                                    {% endif %}
                                 </div>
 
 

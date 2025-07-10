@@ -170,7 +170,7 @@
             {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN')%}
                 <div class="user-section">
                     <div class="user-actions">
-                        <a href="{{ path('buy_ticket_by_user_id') }}" class="btn-home btn-special">
+                        <a href="{{ path('all_tickets') }}" class="btn-home btn-special">
                             <i class="fas fa-ticket-alt"></i> Buy Tickets
                         </a>
                         <a href="{{ path('user_purchases') }}" class="btn-outline">

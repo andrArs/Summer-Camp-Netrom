@@ -28,8 +28,27 @@ final class FestivalController extends AbstractController
         if($festival === null){
             return $this->json(['error' => 'Festival not found'], Response::HTTP_NOT_FOUND);
         }
+
+        $today = new \DateTime();
+        $startDate = $festival->getStartDate();
+        $endDate = $festival->getEndDate();
+
+        if ($today < $startDate) {
+            $status = 'upcoming';
+            $daysLeft = $today->diff($startDate)->format('%r%a');
+        } elseif ($today >= $startDate && $today <= $endDate) {
+            $status = 'ongoing';
+            $daysLeft = 0;
+        } else {
+            $status = 'past';
+            $daysLeft = 0;
+        }
+
+
         return $this->render('festival/showFestival.html.twig', [
-            'festival'=>$festival
+            'festival'=>$festival,
+            'daysLeft'=>$daysLeft,
+            'status'=>$status
         ]);
     }
 

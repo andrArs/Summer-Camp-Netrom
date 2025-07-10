@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Purchase;
 use App\Form\BuyFestivalTicketType;
+use App\Form\BuyTicketByIdType;
 use App\Form\BuyTicketType;
 use App\Form\PurchaseType;
 use App\Repository\FestivalRepository;
 use App\Repository\PurchaseRepository;
+use App\Repository\TicketRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -20,7 +22,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class PurchaseController extends AbstractController
 {
 
-    public function __construct(private readonly PurchaseRepository $purchaseRepository,private readonly FestivalRepository $festivalRepository, private readonly UserRepository $userRepository, private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly PurchaseRepository $purchaseRepository,private readonly TicketRepository $ticketRepository,private readonly FestivalRepository $festivalRepository, private readonly UserRepository $userRepository, private readonly EntityManagerInterface $entityManager)
     {
     }
 
@@ -51,8 +53,19 @@ final class PurchaseController extends AbstractController
         if ($purchase === null) {
             return $this->json(['error' => 'Purchase not found'], Response::HTTP_NOT_FOUND);
         }
+
+        $festival = $purchase->getFestival();
+
+        $today = new \DateTime();
+        $endDate = $festival->getEndDate();
+
+        $isAvailable = false;
+        if ($endDate >= $today) {
+            $isAvailable = true;
+        }
         return $this->render('purchase/show.html.twig', [
-            'purchase' => $purchase
+            'purchase' => $purchase,
+            'isAvailable'=>$isAvailable
         ]);
     }
 
@@ -140,6 +153,40 @@ final class PurchaseController extends AbstractController
             return $this->redirectToRoute('user_purchases', ['id' => $purchase->getId()]);
         }
         return $this->render('purchase/show_user_festival_ticket.html.twig', [
+            'purchase' => $purchase,
+            'form' => $form->createView(),
+            'user' => $user
+        ]);
+
+    }
+
+
+    #[Route('/user/purchase/ticket/{id}', name: 'buy_ticket_by_id', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function buy_ticket_by_id(Request $request, int $id): Response
+    {
+        $purchase = new Purchase();
+        $user = $this->getUser();
+        if ($user === null) {
+            return $this->json(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+        $purchase->setUser($user);
+
+        $ticket=$this->ticketRepository->find($id);
+        if (!$ticket) {
+            return $this->json(['error' => 'Ticket not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $purchase->setTicket($ticket);
+
+        $form = $this->createForm(BuyTicketByIdType::class, $purchase);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($purchase);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('user_purchases', ['id' => $purchase->getId()]);
+        }
+        return $this->render('purchase/show_ticket.html.twig', [
             'purchase' => $purchase,
             'form' => $form->createView(),
             'user' => $user

@@ -70,6 +70,14 @@
             <li><strong>Price:</strong> {{ purchase.ticket.price }} lei</li>
         </ul>
 
+        <h5 class="text mb-3" style="color: #43166a;">
+            {% if isAvailable %}
+                <span style="color: green;"><strong>Available</strong></span>
+            {% else %}
+                <span style="color: darkred;"><strong>No longer available</strong></span>
+            {% endif %}
+        </h5>
+
 
         {% if is_granted('ROLE_ADMIN') %}
 

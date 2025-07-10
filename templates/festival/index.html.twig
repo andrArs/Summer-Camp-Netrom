@@ -198,12 +198,12 @@
                     <p class="card-text">{{ festival.location }}</p>
 
 
-                    {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN')%}
-                    <div >
-                            <a href="{{ path('buy_ticket_by_festival_id',{'id': festival.id}) }}" class="btn-home">
-                                <i class="fas fa-ticket-alt"></i> Buy Tickets
-                            </a></div>
-                    {% endif %}
+{#                    {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN')%}#}
+{#                    <div >#}
+{#                            <a href="{{ path('buy_ticket_by_festival_id',{'id': festival.id}) }}" class="btn-home">#}
+{#                                <i class="fas fa-ticket-alt"></i> Buy Tickets#}
+{#                            </a></div>#}
+{#                    {% endif %}#}
 
 
                     {% if is_granted('ROLE_ADMIN') %}
