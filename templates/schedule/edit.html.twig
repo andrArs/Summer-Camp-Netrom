@@ -80,6 +80,23 @@
             background-color: #f3e6f5;
         }
 
+        .alert {
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        .alert-error {
+            background-color: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+        }
+        .alert-success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+
     </style>
 
     <div class="wrapper bg-white">
@@ -87,6 +104,15 @@
             <a href="{{ path('all_schedules') }}" class="btn-back">← Back to list</a>
         </div>
         <div class="h2 text-center" style="margin-top: 20px;">Edit Schedule</div>
+
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
 
         {{ form_start(form) }}
 

@@ -9,6 +9,7 @@ use App\Repository\UserDetailsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -73,10 +74,17 @@ final class FestivalController extends AbstractController
         $festival=new Festival();
         $form = $this->createForm(FestivalType::class, $festival);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() ) {
+            if ($festival->getStartDate() > $festival->getEndDate()) {
+                $this->addFlash('error', 'Start date must be before end date.');
+                return $this->redirectToRoute('new_festival');
+
+            }
+            if($form->isValid()){
             $this->entityManager->persist($festival);
             $this->entityManager->flush();
-            return $this->redirectToRoute('show_festival', ['id' => $festival->getId()]);
+            $this->addFlash('success', 'Festival created successfully.');
+            return $this->redirectToRoute('show_festival', ['id' => $festival->getId()]);}
 
         }
         return $this->render('festival/newFestival.html.twig', [
@@ -95,9 +103,16 @@ final class FestivalController extends AbstractController
         }
         $form = $this->createForm(FestivalType::class, $festival);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-            return $this->redirectToRoute('show_festival', ['id' => $festival->getId()]);
+        if ($form->isSubmitted()) {
+            if($festival->getStartDate() > $festival->getEndDate()){
+                $this->addFlash('error', 'Start date must be before end date.');
+                return $this->redirectToRoute('edit_festival', ['id' => $festival->getId()]);
+            }
+            if($form->isValid()) {
+                $this->entityManager->flush();
+                $this->addFlash('success', 'Festival updated successfully.');
+                return $this->redirectToRoute('show_festival', ['id' => $festival->getId()]);
+            }
         }
         return $this->render('festival/editFestival.html.twig', [
             'form' => $form->createView(),

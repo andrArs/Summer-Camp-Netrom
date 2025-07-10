@@ -1,8 +1,11 @@
 <?php
 namespace App\Form;
 
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use App\Form\UserDetailsType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -13,13 +16,7 @@ class UserType extends AbstractType{
 
     public function buildForm(FormBuilderInterface $builder, array $options):void{
         $builder
-            ->add('email', TextType::class, [
-                'label' => 'Email',
-                'attr' => [
-                    'class' => 'custom-input',
-                    'placeholder' => 'e.g. anapop3@gmail.com'
-                ]
-            ])
+            ->add('email', EmailType::class, [])
             ->add('password', PasswordType::class, [
                 'label' => 'Password',
                 'attr' => [
@@ -27,12 +24,16 @@ class UserType extends AbstractType{
                     'placeholder' => '********'
                 ]
             ])
-            ->add('role', TextType::class, [
+            ->add('role', ChoiceType::class, [
                 'label' => 'Role',
+                'choices' => [
+                    'User' => 'ROLE_USER',
+                    'Admin' => 'ROLE_ADMIN',
+                ],
                 'attr' => [
                     'class' => 'custom-input',
-                    'placeholder' => 'e.g. ROLE_USER'
-                ]
+                ],
+                'placeholder' => 'Select role',
             ])
             ->add('token', HiddenType::class, [
                 'data' => 'aaaaa',
@@ -49,7 +50,7 @@ class UserType extends AbstractType{
 
     public function configureOptions(OptionsResolver $resolver):void{
         $resolver->setDefaults(array(
-
+            'data_class'=>User::class,
 
         ));
     }

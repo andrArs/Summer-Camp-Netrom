@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+
 class TicketType extends AbstractType{
 
     public function buildForm(FormBuilderInterface $builder, array $options):void{
@@ -30,7 +32,13 @@ class TicketType extends AbstractType{
                 'label' => 'Price',
                 'attr' => [
                     'class' => 'custom-input',
-                    'placeholder' => '230'
+                    'placeholder' => '230',
+                    'min'=>1
+                ],
+                'constraints' => [
+                    new GreaterThanOrEqual([
+                        'value'=>1,
+                    ])
                 ]
             ])
             ->add('save', SubmitType::class, [

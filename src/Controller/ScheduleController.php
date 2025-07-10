@@ -8,6 +8,7 @@ use App\Repository\ScheduleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -70,11 +71,18 @@ final class ScheduleController extends AbstractController
         $schedule= new Schedule();
         $form = $this->createForm(ScheduleType::class, $schedule);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted() ){
+            if($schedule->getStartTime()>$schedule->getEndTime()){
+                $this->addFlash('error', 'Start time must be before end time');
+                return $this->redirectToRoute('new_schedule');
+            }
+            if($form->isValid()){
             $this->entityManager->persist($schedule);
             $this->entityManager->flush();
-            return $this->redirectToRoute('all_schedules');
 
+            $this->addFlash('success', 'Schedule created successfully');
+            return $this->redirectToRoute('edit_schedule', ['id' => $schedule->getId()]);
+        }
         }
         return $this->render('schedule/new.html.twig', [
             'schedule' => $schedule,
@@ -92,10 +100,17 @@ final class ScheduleController extends AbstractController
         }
         $form = $this->createForm(ScheduleType::class, $schedule);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted() ){
+            if($schedule->getStartTime()>$schedule->getEndTime()){
+                $this->addFlash('error', 'Start time must be before end time');
+                return $this->redirectToRoute('edit_schedule', ['id' => $schedule->getId()]);            }
 
+            if($form->isValid()){
             $this->entityManager->flush();
-            return $this->redirectToRoute('all_schedules');
+
+            $this->addFlash('success', 'Schedule updated successfully');
+            return $this->redirectToRoute('edit_schedule', ['id' => $schedule->getId()]);
+            }
 
         }
         return $this->render('schedule/edit.html.twig', [

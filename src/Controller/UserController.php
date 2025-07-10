@@ -80,6 +80,7 @@ final class UserController extends AbstractController
         $form=$this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $form->getErrors(true,false);
 
             $plainPassword = $form->get('password')->getData();
 
@@ -90,7 +91,7 @@ final class UserController extends AbstractController
             $this->entityManager->persist($user);
             $this->entityManager->persist($userDetails);
             $this->entityManager->flush();
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
         }
         return $this->render('user/newUser.html.twig', [
             'form' => $form->createView(),
@@ -117,7 +118,7 @@ final class UserController extends AbstractController
 
 
            $this->entityManager->flush();
-            return $this->redirectToRoute('all_users');
+            return $this->redirectToRoute('show_user', ['id' => $user->getId()]);
         }
         return $this->render('user/editUser.html.twig', [
             'form' => $form->createView(),

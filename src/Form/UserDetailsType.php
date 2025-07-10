@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+
 class UserDetailsType extends AbstractType{
 
     public function buildForm(FormBuilderInterface $builder, array $options):void{
@@ -24,7 +26,14 @@ class UserDetailsType extends AbstractType{
                 'label' => 'Age',
                 'attr' => [
                     'class' => 'custom-input',
-                    'placeholder' => '23'
+                    'placeholder' => '23',
+                    'min'=>16
+                ],
+                'constraints' => [
+                    new GreaterThanOrEqual([
+                        'value'=>16,
+//                        'message' => 'Age must be equal or greater than 16'
+                    ])
                 ]
             ])
             ;
