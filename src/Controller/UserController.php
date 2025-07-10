@@ -26,8 +26,14 @@ final class UserController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function getAllUsers(Request $request,PaginatorInterface $paginator): Response
     {
+        $searchTerm = $request->query->get('search', '');
         $queryBuilder = $this->userRepository->createQueryBuilder('u');
 
+        if (!empty($searchTerm)) {
+            $queryBuilder
+                ->where('u.email LIKE :search')
+                ->setParameter('search', '%' . $searchTerm . '%');
+        }
 
         $pagination = $paginator->paginate(
             $queryBuilder,
@@ -36,7 +42,8 @@ final class UserController extends AbstractController
         );
 
         return $this->render('user/index.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'search' => $searchTerm
         ]);
     }
 

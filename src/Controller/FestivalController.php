@@ -56,8 +56,13 @@ final class FestivalController extends AbstractController
     #[IsGranted('PUBLIC_ACCESS')]
     public function getAllFestivals(Request $request, PaginatorInterface $paginator): Response
     {
+        $searchTerm = $request->query->get('search', '');
         $queryBuilder = $this->festivalRepository->createQueryBuilder('f');
-
+        if (!empty($searchTerm)) {
+            $queryBuilder
+                ->where('f.name LIKE :search')
+                ->setParameter('search', '%' . $searchTerm . '%');
+        }
 
         $pagination = $paginator->paginate(
             $queryBuilder,
@@ -66,7 +71,9 @@ final class FestivalController extends AbstractController
         );
 
         return $this->render('festival/index.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'search' => $searchTerm
+
         ]);
     }
 

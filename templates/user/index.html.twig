@@ -129,6 +129,20 @@
         <h1 class="mb-5 text-center"
             style="color:#d4cfff;">Users</h1>
 
+        <form method="get" action="{{ path('all_users') }}" class="mb-4 d-flex justify-content-center">
+            <input
+                type="text"
+                name="search"
+                value="{{ search|default('') }}"
+                placeholder="Search by user email..."
+                class="form-control w-50 me-2"
+                style="border-radius: 25px;"
+            >
+            <button type="submit" class="btn btn-outline-light" style="border-radius: 25px;">
+                Search
+            </button>
+        </form>
+
         <div class="row row-cols-1 row-cols-md-3 g-4">
 
             {% for user in pagination %}
