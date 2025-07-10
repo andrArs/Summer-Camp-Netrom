@@ -127,13 +127,18 @@
                         <div class="card-body d-flex flex-column justify-content-center">
 
                             <p class="card-text">
-                                <a href="{{ path('one_artist', {'id': fa.artist.id}) }}">
+                                <a href="{{ path('one_artist', {'id': fa.artist.id}) }}" style="color: #7b2ff7;">
                                     {{ fa.artist.name|default('Unknown Artist') }}</a>
                             </p>
 
                             <p class="card-text">
                                 Day {{ fa.schedule.day|default('N/A') }},
                                 {{ fa.schedule.date ? fa.schedule.date|date('Y-m-d') : 'No date' }}
+                            </p>
+
+                            <p class="card-text">
+                                Stage: {{ fa.schedule.stage.name|default('N/A') }}
+
                             </p>
 
                             <h5 class="card-title">

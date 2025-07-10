@@ -86,6 +86,19 @@
             font-size: 0.9rem;
         }
 
+        .btn-custom {
+            border-radius: 25px;
+            padding: 0.4rem 0.9rem;
+            color: #d4cfff;
+            border-color: #d4cfff;
+        }
+
+        .btn-custom:hover {
+            background-color: rgba(212, 207, 255, 0.1);
+            color: #ffffff;
+            border-color: #d4cfff;
+        }
+
 
 
     </style>
@@ -94,16 +107,13 @@
 
         <div class="d-flex justify-content-end mb-3">
             <a href="{{ path('app_homepage') }}"
-               class="btn btn-outline-light me-3"
-               style="border-radius: 25px"
-            >
+               class="btn btn-outline-light btn-custom me-3" >
                 Homepage
             </a>
 
             {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('new_artist') }}"
-               class="btn btn-outline-light me-3"
-               style="border-radius: 25px" >
+               class="btn btn-outline-light btn-custom me-3" >
                 New Artist
             </a>
             {% endif %}
@@ -111,14 +121,13 @@
             {% if not is_granted('ROLE_ADMIN') %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED')  %}
                 <a href="{{ path('buy_ticket_by_user_id') }}"
-                   class="btn btn-outline-light me-3"
-                   style="border-radius: 25px" >
+                   class="btn btn-outline-light btn-custom me-3"
+                style="border-color: #e6965c; color: #edbd78">
                     Buy Ticket
                 </a>
             {% else %}
                 <a href="{{ path('app_login') }}"
-                   class="btn btn-outline-light me-3"
-                   style="border-radius: 25px" >
+                   class="btn btn-outline-light btn-custom me-3" >
                     Buy Ticket
                 </a>
             {% endif %}
@@ -127,15 +136,13 @@
             {% if not is_granted('ROLE_ADMIN') %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <a href="{{ path('user_profile') }}"
-                   class="btn btn-outline-light me-3"
-                   style="border-radius: 25px" >
+                   class="btn btn-outline-light btn-custom me-3">
                     Your Profile
                 </a>
 
             {% else %}
                 <a href="{{ path('app_login') }}"
-                   class="btn btn-outline-light me-3"
-                   style="border-radius: 25px" >
+                   class="btn btn-outline-light btn-custom me-3">
                     Your Profile
                 </a>
                 {% endif %}
@@ -143,14 +150,12 @@
 
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <a href="{{ path('app_logout') }}"
-               class="btn btn-outline-light me-3"
-               style="border-radius: 25px" >
+               class="btn btn-outline-light btn-custom me-3">
                 Log out
             </a>
             {% else %}
                 <a href="{{ path('app_login') }}"
-                   class="btn btn-outline-light me-3"
-                   style="border-radius: 25px" >
+                   class="btn btn-outline-light btn-custom me-3">
                     Log in
                 </a>
             {% endif %}
@@ -177,7 +182,15 @@
 
             {% for artist in pagination %}
                 <div class="col">
-                    <div class="card h-100 card-mov">
+                    <div class="card h-100 card-mov"
+{#                         style="#}
+{#                             background-image:#}
+{#                             linear-gradient(to top, rgba(46,26,71,0.9), rgba(46,26,71,0.2)),#}
+{#                             url('{{ artist.image ? asset(artist.image) : 'https://media.istockphoto.com/id/1204187820/photo/abstract-purple-backgrounds.jpg?s=612x612&w=0&k=20&c=Tn2MdAfR3AgwYAy1Qs-XxKao6hhPXyik8pDSuU5gP2Y=' }}');#}
+{#                             background-size: cover;#}
+{#                             background-position: center;#}
+{#                             background-repeat: no-repeat;"#}
+                    >
                         <div class="card-body d-flex flex-column justify-content-center">
 
                             <h5 class="card-title">

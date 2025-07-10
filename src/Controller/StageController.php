@@ -27,7 +27,7 @@ final class StageController extends AbstractController
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
-            3
+            6
         );
 
         return $this->render('stage/index.html.twig', [

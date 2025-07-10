@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Purchase;
+use App\Form\BuyFestivalTicketType;
 use App\Form\BuyTicketType;
 use App\Form\PurchaseType;
+use App\Repository\FestivalRepository;
 use App\Repository\PurchaseRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +20,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class PurchaseController extends AbstractController
 {
 
-    public function __construct(private readonly PurchaseRepository $purchaseRepository, private readonly UserRepository $userRepository, private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly PurchaseRepository $purchaseRepository,private readonly FestivalRepository $festivalRepository, private readonly UserRepository $userRepository, private readonly EntityManagerInterface $entityManager)
     {
     }
 
@@ -102,9 +104,42 @@ final class PurchaseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($purchase);
             $this->entityManager->flush();
-            return $this->redirectToRoute('app_homepage', ['id' => $purchase->getId()]);
+            return $this->redirectToRoute('user_purchases', ['id' => $purchase->getId()]);
         }
         return $this->render('purchase/show_boughtTicket.html.twig', [
+            'purchase' => $purchase,
+            'form' => $form->createView(),
+            'user' => $user
+        ]);
+
+    }
+
+    #[Route('/user/purchase/festival/{id}', name: 'buy_ticket_by_festival_id', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function buy_ticket_by_festival_id(Request $request, int $id): Response
+    {
+        $purchase = new Purchase();
+        $user = $this->getUser();
+        if ($user === null) {
+            return $this->json(['error' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+        $purchase->setUser($user);
+
+        $festival=$this->festivalRepository->find($id);
+        if (!$festival) {
+            return $this->json(['error' => 'Festival not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $purchase->setFestival($festival);
+
+        $form = $this->createForm(BuyFestivalTicketType::class, $purchase);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($purchase);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('user_purchases', ['id' => $purchase->getId()]);
+        }
+        return $this->render('purchase/show_user_festival_ticket.html.twig', [
             'purchase' => $purchase,
             'form' => $form->createView(),
             'user' => $user

@@ -42,7 +42,7 @@ final class FestivalController extends AbstractController
         $pagination = $paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
-            3 //festivals per page
+            6 //festivals per page
         );
 
         return $this->render('festival/index.html.twig', [

@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserDetailsType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +22,7 @@ class RegistrationForm extends AbstractType
             ->add('details', UserDetailsType::class, [
                 'label' => false
             ])
-            ->add('email')
+            ->add('email',EmailType::class, [])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

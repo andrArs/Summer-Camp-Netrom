@@ -45,6 +45,27 @@
             background-color: #f3e6f5;
         }
 
+        .card {
+            background-color: #3b2a6d;
+            color: #e0d9ff;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 8px 20px rgba(59, 42, 109, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(154, 78, 241, 0.8);
+        }
+
+        .card-text {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: #bfb7ff;
+        }
+
     </style>
 
     <div class="example-wrapper">
@@ -68,9 +89,90 @@
             <li style="margin-bottom: 0.5rem;"><strong style="color: #7b2ee8;">Role:</strong> {{ user.role }}</li>
         </ul>
 
+        <div>
+            <h4 style="color: #7b2ee8; text-align: left; font-weight:550">Tickets: </h4>
+            {% if user.purchases is not null  %}
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    {% for purchase in user.purchases %}
+                        <div class="col">
+                            <div class="card h-100 card-mov">
+                                <div class="card-body d-flex flex-column justify-content-center">
+                                    <p class="card-text">
+                                        Ticket:
+                                        <a
+                                            style="color:#bfb7ff"
+                                            href="{{ path('show_ticket', {'id':purchase.ticket.id}) }}" >
+                                            {{ purchase.ticket.type }}
+                                        </a></p>
+                                    <p class="card-text">
+                                        Festival:
+                                        <a style="color:#bfb7ff"
+                                           href="{{ path('show_festival', {'id':purchase.festival.id}) }}">
+                                            {{ purchase.festival.name }}
+                                        </a></p>
+                                </div>
+
+
+
+                            <div style="margin: 10px;">
+                            <button type="button"
+                                    class="btn btn-danger btn-sm w-100 mt-auto"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal{{ purchase.id }}">
+                                Delete
+                            </button>
+                            </div>  </div>
+
+                            {#modal#}
+                            <div class="modal fade"
+                                 id="deleteModal{{ purchase.id }}"
+                                 tabindex="-1"
+                                 aria-labelledby="deleteModalLabel{{ purchase.id }}"
+                                 aria-hidden="true">
+
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <form
+                                            action="{{ path('delete_purchase', {'id': purchase.id}) }}"
+                                            method="post">
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteModalLabel{{ purchase.id }}">
+                                                    Are you sure you want to delete the following purchase?
+                                                </h5>
+
+                                                <button
+                                                    type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No purchases found.</p>
+            {% endif %}
+        </div>
+
         {% if is_granted('ROLE_ADMIN') %}
 
-        <a href="{{ path('edit_user', {'id': user.id})  }}" class="btn btn-outline-secondary" style="border-radius: 25px">
+        <a href="{{ path('edit_user', {'id': user.id})  }}" class="btn btn-outline-secondary" style="border-radius: 25px; margin-top: 50px;">
             Edit User
         </a>
 

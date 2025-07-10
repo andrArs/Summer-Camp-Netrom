@@ -5,28 +5,44 @@
 {% block body %}
     <style>
         body {
-            background: #2e1a47;
+            background: linear-gradient(rgba(46, 26, 71, 0.85), rgba(46, 26, 71, 0.95)),
+            url('https://www.lifeventure.com/cdn/shop/articles/summer-music-festivals-1.jpg?v=1697724749') center/cover no-repeat;
             font-family: 'Poppins', sans-serif;
             color: white;
-            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin: 0;
             padding: 0;
         }
 
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .homepage-container {
-            padding: 5rem 2rem;
+            padding: 2rem;
+            text-align: center;
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            color: #a78bfa;
+            letter-spacing: 1px;
         }
 
-        p {
-            font-size: 1.3rem;
-            margin-bottom: 2.5rem;
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 3rem 0;
         }
 
         .btn-home {
@@ -40,58 +56,146 @@
             text-decoration: none;
             box-shadow: 0 4px 12px rgba(76, 29, 149, 0.4);
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 150px;
+            justify-content: center;
         }
 
         .btn-home:hover {
             background-color: #6b21a8;
-            box-shadow: 0 6px 20px rgba(76, 29, 149, 0.6);
+            box-shadow: 0 6px 20px rgba(107, 33, 168, 0.6);
+            transform: translateY(-3px);
         }
+
+        .btn-special {
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-special:hover {
+            background: linear-gradient(135deg, #f97316, #f59e0b);
+            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .btn-special::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            transition: all 0.3s ease;
+        }
+
+        .btn-special:hover::after {
+            left: 100%;
+        }
+
+        .user-section {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: 2px solid #a78bfa;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline:hover {
+            background: rgba(167, 139, 250, 0.1);
+            transform: translateY(-2px);
+        }
+
     </style>
 
-    <div class="homepage-container">
-        <h1>Welcome to ShowTime app!</h1>
-        <div style="margin-top:50px ">
-        <a href="{{ path('all_festivals') }}" class="btn-home">Festivals</a>
-        <a href="{{ path('all_artists') }}" class="btn-home"> Artists</a>
-        <a href="{{ path('all_stages') }}" class="btn-home"> Stages</a>
-        <a href="{{ path('all_tickets') }}" class="btn-home"> Tickets</a>
-        <a href="{{ path('all_lineup') }}" class="btn-home"> Lineup</a>
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('all_purchases') }}" class="btn-home"> Purchases</a>
-                <a href="{{ path('all_schedules') }}" class="btn-home"> Schedules</a>
-                <a href="{{ path('all_users') }}" class="btn-home"> Users</a>
-            {% endif %}
-        </div>
+    <div class="overlay">
+        <div class="homepage-container">
+            <h1>Show Time</h1>
 
-        {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN')%}
-            <div style="margin-top: 50px;">
-        <a href="{{ path('buy_ticket_by_user_id') }}"
-           class="btn btn-outline-light me-3"
-           style="border-radius: 25px"> Buy Ticket</a>
-            <a href="{{ path('user_purchases') }}"
-               class="btn btn-outline-light me-3"
-               style="border-radius: 25px"> Your Tickets</a>
-
-                <a href="{{ path('user_profile') }}"
-                   class="btn btn-outline-light me-3"
-                   style="border-radius: 25px"> Your Profile</a>
-        {% endif %}
+            <div class="btn-container">
+                <a href="{{ path('all_festivals') }}" class="btn-home">
+                     Festivals
+                </a>
+                <a href="{{ path('all_artists') }}" class="btn-home">
+                     Artists
+                </a>
+                <a href="{{ path('all_stages') }}" class="btn-home">
+                     Stages
+                </a>
+                <a href="{{ path('all_tickets') }}" class="btn-home">
+                     Tickets
+                </a>
+                <a href="{{ path('all_lineup') }}" class="btn-home">
+                     Lineup
+                </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('all_purchases') }}" class="btn-home">
+                         Purchases
+                    </a>
+                    <a href="{{ path('all_schedules') }}" class="btn-home">
+                         Schedules
+                    </a>
+                    <a href="{{ path('all_users') }}" class="btn-home">
+                         Users
+                    </a>
+                {% endif %}
             </div>
 
-        <div style="margin-top: 50px;">
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <a href="{{ path('app_logout') }}"
-                   class="btn btn-outline-light me-3"
-                   style="border-radius: 25px" >
-                    Log out
-                </a>
-            {% else %}
-                <a href="{{ path('app_login') }}"
-                   class="btn btn-outline-light me-3"
-                   style="border-radius: 25px" >
-                    Log in
-                </a>
+            {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN')%}
+                <div class="user-section">
+                    <div class="user-actions">
+                        <a href="{{ path('buy_ticket_by_user_id') }}" class="btn-home btn-special">
+                            <i class="fas fa-ticket-alt"></i> Buy Tickets
+                        </a>
+                        <a href="{{ path('user_purchases') }}" class="btn-outline">
+                             Your Tickets
+                        </a>
+                        <a href="{{ path('user_profile') }}" class="btn-outline">
+                             Your Profile
+                        </a>
+                    </div>
+                </div>
             {% endif %}
+
+            <div class="user-actions" style="margin-top: 3rem;">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ path('app_logout') }}" class="btn-outline">
+                        <i class="fas fa-sign-out-alt"></i> Log out
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn-outline">
+                        <i class="fas fa-sign-in-alt"></i> Log in
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 {% endblock %}

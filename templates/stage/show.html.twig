@@ -12,7 +12,7 @@
         .example-wrapper {
             margin: 2em auto;
             max-width: 700px;
-            background-color: white;
+            background-color: rgb(236, 225, 253);
             border-radius: 15px;
             padding: 2rem;
             box-shadow: 0 0 15px rgba(111, 66, 193, 0.3);
@@ -72,16 +72,21 @@
 
     </style>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+
     <div class="example-wrapper">
 
-        <h1>Details about {{ stage.name }}!</h1>
+        <div style="color: #2e1a47; text-align: center; font-family: 'Poppins', sans-serif; margin: 2rem 0;">
+            <h2>Details about <strong>{{ stage.name }}</strong>!</h2>
+            <h3>
+                <i class="bi bi-music-note-beamed" style="color: #6f42c1;"></i>
+                    Genre: <strong>{{ stage.genre }}</strong></h3>
+            <p style="max-width: 600px; margin: 1rem auto; line-height: 1.4;">
+                {{ stage.description }}
+            </p>
+        </div>
 
-        <h3>Genre: <strong>{{ stage.genre}}</strong></h3>
-
-
-        <ul>
-            {{ stage.description }}
-             </ul>
 
         <img
             src="https://solotech.com/wp-content/uploads/2024/08/Veld-Night-1-7.jpg"
@@ -92,9 +97,11 @@
 
 
         {% if is_granted('ROLE_ADMIN') %}
+        <div style="margin-top: 1.2rem;">
         <a href="{{ path('edit_stage',  {'id': stage.id}) }}" class="btn btn-danger" >
             Edit Stage
         </a>
+        </div>
 
         {#            button trigger modal#}
         <div class="btn-container">

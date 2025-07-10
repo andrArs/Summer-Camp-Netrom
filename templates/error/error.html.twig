@@ -12,7 +12,7 @@
     </style>
     <div class="container text-center mt-5">
         <h1 class="text-warning">Oops! Looks like you're lost...</h1>
-        <p class="lead">This page is currently not available. {{ message }}. You can try these instead:</p>
+        <p class="lead">{{ message }}. You can try these instead:</p>
         <a href="{{ path('app_homepage') }}" class="btn btn-outline-light mt-3" style="border-radius: 25px; margin-right: 25px;">Homepage</a>
         <a href="{{ path('app_login') }}" class="btn btn-outline-light mt-3" style="border-radius: 25px; margin-right: 25px;">Sign In</a>
         <a href="{{ path(go_back_to ) }}" class="btn btn-outline-light mt-3" style="border-radius: 25px;">See {{name  }}</a>

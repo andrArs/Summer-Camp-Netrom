@@ -86,6 +86,32 @@
             font-size: 0.9rem;
         }
 
+        .btn-home {
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        .btn-home:hover {
+            background: linear-gradient(135deg, #f97316, #f59e0b);
+            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.6);
+            transform: translateY(-3px);
+        }
+
+
+
     </style>
 
     <div class="container mt-4">
@@ -165,19 +191,19 @@
                 <div class="card-body d-flex flex-column justify-content-center">
 
                     <h5 class="card-title">
-                        <a href="{{ path('show_festival', {'id': festival.id}) }}">
+                        <a href="{{ path('show_festival', {'id': festival.id}) }}" style="color: #7b2ff7;">
                             {{ festival.name }}
                         </a>
                     </h5>
                     <p class="card-text">{{ festival.location }}</p>
 
 
-{#                    <a href="{{ path('buy_ticket_by_user_id', {'id': festival.purchases.getUser()}) }}"#}
-{#                       class="btn btn-outline-light"#}
-{#                       style="border-radius: 25px"#}
-{#                    >#}
-{#                        Buy#}
-{#                    </a>#}
+                    {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN')%}
+                    <div >
+                            <a href="{{ path('buy_ticket_by_festival_id',{'id': festival.id}) }}" class="btn-home">
+                                <i class="fas fa-ticket-alt"></i> Buy Tickets
+                            </a></div>
+                    {% endif %}
 
 
                     {% if is_granted('ROLE_ADMIN') %}

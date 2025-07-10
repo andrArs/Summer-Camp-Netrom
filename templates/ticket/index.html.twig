@@ -171,7 +171,7 @@
                     <div class="card h-100 card-mov">
                         <div class="card-body d-flex flex-column justify-content-center">
                             <h5 class="card-title">
-                                <a href="{{ path('show_ticket', {'id': ticket.id}) }}">
+                                <a href="{{ path('show_ticket', {'id': ticket.id}) }}" style="color: #7b2ff7;">
                                     {{ ticket.type }}
                                 </a>
                             </h5>
@@ -179,7 +179,7 @@
 
                             {% if is_granted('ROLE_ADMIN') %}
 
-                            <a href="{{ path('edit_ticket', {'id': ticket.id}) }}" class="btn btn-outline-light" >
+                            <a href="{{ path('edit_ticket', {'id': ticket.id}) }}" class="btn btn-outline-light" style="border-radius: 25px;" >
                                 Edit Ticket
                             </a>
 

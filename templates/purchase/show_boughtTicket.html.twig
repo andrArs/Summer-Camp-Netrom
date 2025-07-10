@@ -16,7 +16,7 @@
             border-radius: 10px;
             margin: 50px auto;
             padding: 30px;
-            background-color: #fff;
+            background-color: rgb(236, 225, 253);
             box-shadow: 0 0 20px rgba(123, 46, 232, 0.1);
         }
 
@@ -76,6 +76,19 @@
             background-color: #f3e6f5;
         }
 
+        .btn-back {
+            display: inline-block;
+            margin: 20px auto 0;
+            color: #6f42c1;
+            border: 1px solid #6f42c1;
+            padding: 4px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+
+        }
+
+
     </style>
 
 <div class="container mt-4">
@@ -126,6 +139,9 @@
     </div>
 
     <div class="wrapper bg-white">
+        <div class="text-start mb-3">
+            <a href="{{ path('all_festivals') }}" class="btn btn-back">Back to list</a>
+        </div>
         <div class="h2 text-center">Buy Ticket</div>
 
         <div
@@ -164,7 +180,7 @@
         </div>
 
         <div class="form-group text-center mt-3">
-            {{ form_row(form.save) }}
+            {{ form_row(form.save,{'attr': {'style': 'border-radius: 8px; border: 2px solid #7b2ee8;padding: 8px 10px;' }}) }}
         </div>
 
         {{ form_end(form) }}

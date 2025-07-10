@@ -28,11 +28,6 @@
             margin-bottom: 10px;
         }
 
-        .text-muted {
-            color: #666;
-            margin-bottom: 25px;
-        }
-
         .form-group {
             margin-bottom: 1.5rem;
             text-align: left;
@@ -84,9 +79,9 @@
 
     <div class="wrapper bg-white">
         <div style="text-align: left;">
-            <a href="{{ path('all_tickets') }}" class="btn-back">← Back to list</a>
+            <a href="{{ path('all_stages') }}" class="btn-back">← Back to list</a>
         </div>
-        <div class="h2 text-center">Create new Stage</div>
+        <div class="h2 text-center" style="margin-top: 20px;">Create new Stage</div>
 
         {{ form_start(form) }}
         <div class="form-group">
@@ -111,7 +106,7 @@
             {{ form_row(form.save) }}
         </div>
 
-        {{ form_end(form) }}
+        {{ form_end(form,{'attr': {'style': 'border-radius: 8px; border: 2px solid #7b2ee8;padding: 8px 10px;' }}) }}
     </div>
 
 {% endblock %}

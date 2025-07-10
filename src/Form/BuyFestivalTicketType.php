@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-class BuyTicketType extends AbstractType{
+class BuyFestivalTicketType extends AbstractType{
 
     public function buildForm(FormBuilderInterface $builder, array $options):void{
         $builder
@@ -22,11 +22,7 @@ class BuyTicketType extends AbstractType{
                 },
                 'placeholder' => 'Select Ticket'
             ])
-            ->add('festival', EntityType::class, [
-                'class'=>Festival::class,
-                'choice_label'=>'name',
-                'placeholder'=>'Select Festival'
-            ])
+
             ->add('save', SubmitType::class, [
                 'label' => 'Buy',
                 'attr' => [

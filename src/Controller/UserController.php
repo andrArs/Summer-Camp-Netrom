@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\UserDetails;
+use App\Form\EditUserType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -108,7 +109,7 @@ final class UserController extends AbstractController
         }
         $userDetails =$user->getDetails();
 
-        $form=$this->createForm(UserType::class, $user);
+        $form=$this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if (empty($user->getPassword()))

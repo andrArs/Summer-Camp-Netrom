@@ -107,7 +107,7 @@
         </div>
     {% endif %}
 
-    <div class="h2 text-center">Show Time</div>
+    <div class="h2 text-center"><a href="{{ path('app_homepage') }}" style="color:#5d4587;">Show Time</a></div>
 {#    <div style="text-align: center; margin-top: 20px; color: #43166a;"> Log In </div>#}
     <label for="inputEmail" class="form-group">Email</label>
     <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
@@ -115,11 +115,11 @@
     <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required>
     <input type="hidden" name="_csrf_token"  value="{{ csrf_token('authenticate') }}">
 
-    <div class="checkbox mb-3 text-start" >
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
-    </div>
+{#    <div class="checkbox mb-3 text-start" >#}
+{#        <label>#}
+{#            <input type="checkbox" name="_remember_me"> Remember me#}
+{#        </label>#}
+{#    </div>#}
 
     <button class="btn-back2" type="submit" style="align-content: center">
         Log in
